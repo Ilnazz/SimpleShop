@@ -1,0 +1,44 @@
+﻿<Page x:Class="SessionProject.Pages.RegistrationPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:SessionProject.Pages"
+      mc:Ignorable="d" d:Background="White"
+      Title="Регистрация пользователя"
+      Style="{StaticResource CommonStyle}">
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel HorizontalAlignment="Center" Margin="5">
+            <TextBlock Text="Регистрация нового пользователя" Margin="0,0,0,5"/>
+
+            <Label Target="{Binding ElementName=TBLastName}" Content="Фамилия:" Margin="0,0,0,5"/>
+            <TextBox x:Name="TBLastName" Margin="0,0,0,5" MaxLength="50"/>
+
+            <Label Target="{Binding ElementName=TBFirstName}" Content="Имя:" Margin="0,0,0,5"/>
+            <TextBox x:Name="TBFirstName" Margin="0,0,0,5" MaxLength="50"/>
+
+            <Label Target="{Binding ElementName=TBLastName}" Content="Отчество:" Margin="0,0,0,5"/>
+            <TextBox x:Name="TBPatronymic" Margin="0,0,0,5" MaxLength="50"/>
+
+            <StackPanel Orientation="Horizontal" Margin="0,0,0,5">
+                <Label Content="Пол:"/>
+                <RadioButton x:Name="RBGenderMale" Content="Мужской" VerticalContentAlignment="Center" Margin="0,0,5,0"/>
+                <RadioButton x:Name="RBGenderFemale" Content="Женский" VerticalContentAlignment="Center"/>
+            </StackPanel>
+
+            <Label Target="{Binding ElementName=TBPhoneNumber}" Content="Номер телефона:" Margin="0,0,0,5"/>
+            <TextBox x:Name="TBPhoneNumber" Margin="0,0,0,5" MaxLength="50"/>
+
+            <Label Target="{Binding ElementName=TBEmail}" Content="Адрес электронной почты:" Margin="0,0,0,5"/>
+            <TextBox x:Name="TBEmail" Margin="0,0,0,5" MaxLength="50"/>
+
+            <Label Target="{Binding ElementName=TBLogin}" Content="Логин:" Margin="0,0,0,5"/>
+            <TextBox x:Name="TBLogin" Margin="0,0,0,5" MaxLength="50"/>
+
+            <Label Target="{Binding ElementName=PBPassword}" Content="Пароль:" Margin="0,0,0,5"/>
+            <PasswordBox x:Name="PBPassword" Margin="0,0,0,10" MaxLength="50"/>
+
+            <Button x:Name="ButtonRegiser" Content="Зарегистрироваться" Click="ButtonRegiser_Click"/>
+        </StackPanel>
+    </ScrollViewer>
+</Page>

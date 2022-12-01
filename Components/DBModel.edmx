@@ -1,0 +1,769 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="Хранилище SessionProjectEntities" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Gender">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" MaxLength="10" Nullable="false" />
+        </EntityType>
+        <EntityType Name="MeasureUnit">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" MaxLength="150" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Order">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="DateTime" Type="datetime" Nullable="false" />
+          <Property Name="UserCustomerID" Type="int" Nullable="false" />
+          <Property Name="UserExecutorID" Type="int" Nullable="false" />
+          <Property Name="OrderStatusID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Order_Product">
+          <Key>
+            <PropertyRef Name="OrderID" />
+            <PropertyRef Name="ProductID" />
+          </Key>
+          <Property Name="OrderID" Type="int" Nullable="false" />
+          <Property Name="ProductID" Type="int" Nullable="false" />
+          <Property Name="Quantity" Type="int" Nullable="false" />
+          <Property Name="PurchasePrice" Type="money" Nullable="false" />
+        </EntityType>
+        <EntityType Name="OrderStatus">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" MaxLength="150" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Product">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="Photo" Type="varbinary(max)" />
+          <Property Name="Cost" Type="money" Nullable="false" />
+          <Property Name="Description" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="AdditionDateTime" Type="datetime" Nullable="false" />
+          <Property Name="Quantity" Type="int" Nullable="false" />
+          <Property Name="MeasureUnitID" Type="int" Nullable="false" />
+          <Property Name="SupplierCountryID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Product_SupplierCountry">
+          <Key>
+            <PropertyRef Name="ProductID" />
+            <PropertyRef Name="SupplierCountryID" />
+          </Key>
+          <Property Name="ProductID" Type="int" Nullable="false" />
+          <Property Name="SupplierCountryID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ProductsReceipt">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="OrderID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Supplier">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="150" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SupplierCountry">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="TItle" Type="nvarchar" MaxLength="150" Nullable="false" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="Login" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Password" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="RoleID" Type="int" Nullable="false" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Patronymic" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="PhoneNumber" Type="nvarchar" MaxLength="20" />
+          <Property Name="Email" Type="nvarchar" MaxLength="320" />
+          <Property Name="GenderID" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Order_OrderStatus">
+          <End Role="OrderStatus" Type="Self.OrderStatus" Multiplicity="1" />
+          <End Role="Order" Type="Self.Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="OrderStatus">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="OrderStatusID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Order_Product_Order">
+          <End Role="Order" Type="Self.Order" Multiplicity="1" />
+          <End Role="Order_Product" Type="Self.Order_Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Order">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Order_Product">
+              <PropertyRef Name="OrderID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Order_Product_Product">
+          <End Role="Product" Type="Self.Product" Multiplicity="1" />
+          <End Role="Order_Product" Type="Self.Order_Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Order_Product">
+              <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Order_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="Order" Type="Self.Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="UserExecutorID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Order_User1">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="Order" Type="Self.Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="OrderStatusID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Product_MeasureUnit">
+          <End Role="MeasureUnit" Type="Self.MeasureUnit" Multiplicity="1" />
+          <End Role="Product" Type="Self.Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MeasureUnit">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="MeasureUnitID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Product_SupplierCountry_Product">
+          <End Role="Product" Type="Self.Product" Multiplicity="1" />
+          <End Role="Product_SupplierCountry" Type="Self.Product_SupplierCountry" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Product_SupplierCountry">
+              <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Product_SupplierCountry_SupplierCountry">
+          <End Role="SupplierCountry" Type="Self.SupplierCountry" Multiplicity="1" />
+          <End Role="Product_SupplierCountry" Type="Self.Product_SupplierCountry" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SupplierCountry">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Product_SupplierCountry">
+              <PropertyRef Name="SupplierCountryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductsReceipt_Order">
+          <End Role="Order" Type="Self.Order" Multiplicity="1" />
+          <End Role="ProductsReceipt" Type="Self.ProductsReceipt" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Order">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ProductsReceipt">
+              <PropertyRef Name="OrderID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_User_Gender">
+          <End Role="Gender" Type="Self.Gender" Multiplicity="1" />
+          <End Role="User" Type="Self.User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Gender">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="GenderID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_User_Role">
+          <End Role="Role" Type="Self.Role" Multiplicity="1" />
+          <End Role="User" Type="Self.User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="RoleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище SessionProjectEntitiesContainer">
+          <EntitySet Name="Gender" EntityType="Self.Gender" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MeasureUnit" EntityType="Self.MeasureUnit" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Order" EntityType="Self.Order" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Order_Product" EntityType="Self.Order_Product" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OrderStatus" EntityType="Self.OrderStatus" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Product" EntityType="Self.Product" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Product_SupplierCountry" EntityType="Self.Product_SupplierCountry" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProductsReceipt" EntityType="Self.ProductsReceipt" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Role" EntityType="Self.Role" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Supplier" EntityType="Self.Supplier" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SupplierCountry" EntityType="Self.SupplierCountry" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Order_OrderStatus" Association="Self.FK_Order_OrderStatus">
+            <End Role="OrderStatus" EntitySet="OrderStatus" />
+            <End Role="Order" EntitySet="Order" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Order_Product_Order" Association="Self.FK_Order_Product_Order">
+            <End Role="Order" EntitySet="Order" />
+            <End Role="Order_Product" EntitySet="Order_Product" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Order_Product_Product" Association="Self.FK_Order_Product_Product">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="Order_Product" EntitySet="Order_Product" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Order_User" Association="Self.FK_Order_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="Order" EntitySet="Order" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Order_User1" Association="Self.FK_Order_User1">
+            <End Role="User" EntitySet="User" />
+            <End Role="Order" EntitySet="Order" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Product_MeasureUnit" Association="Self.FK_Product_MeasureUnit">
+            <End Role="MeasureUnit" EntitySet="MeasureUnit" />
+            <End Role="Product" EntitySet="Product" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Product_SupplierCountry_Product" Association="Self.FK_Product_SupplierCountry_Product">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="Product_SupplierCountry" EntitySet="Product_SupplierCountry" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Product_SupplierCountry_SupplierCountry" Association="Self.FK_Product_SupplierCountry_SupplierCountry">
+            <End Role="SupplierCountry" EntitySet="SupplierCountry" />
+            <End Role="Product_SupplierCountry" EntitySet="Product_SupplierCountry" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductsReceipt_Order" Association="Self.FK_ProductsReceipt_Order">
+            <End Role="Order" EntitySet="Order" />
+            <End Role="ProductsReceipt" EntitySet="ProductsReceipt" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User_Gender" Association="Self.FK_User_Gender">
+            <End Role="Gender" EntitySet="Gender" />
+            <End Role="User" EntitySet="User" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User_Role" Association="Self.FK_User_Role">
+            <End Role="Role" EntitySet="Role" />
+            <End Role="User" EntitySet="User" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="SessionProjectEntities" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="SessionDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Genders" EntityType="SessionProjectEntities.Gender" />
+          <EntitySet Name="MeasureUnits" EntityType="SessionProjectEntities.MeasureUnit" />
+          <EntitySet Name="Orders" EntityType="SessionProjectEntities.Order" />
+          <EntitySet Name="Order_Product" EntityType="SessionProjectEntities.Order_Product" />
+          <EntitySet Name="OrderStatus" EntityType="SessionProjectEntities.OrderStatu" />
+          <EntitySet Name="Products" EntityType="SessionProjectEntities.Product" />
+          <EntitySet Name="ProductsReceipts" EntityType="SessionProjectEntities.ProductsReceipt" />
+          <EntitySet Name="Roles" EntityType="SessionProjectEntities.Role" />
+          <EntitySet Name="Suppliers" EntityType="SessionProjectEntities.Supplier" />
+          <EntitySet Name="SupplierCountries" EntityType="SessionProjectEntities.SupplierCountry" />
+          <EntitySet Name="sysdiagrams" EntityType="SessionProjectEntities.sysdiagram" />
+          <EntitySet Name="Users" EntityType="SessionProjectEntities.User" />
+          <AssociationSet Name="FK_User_Gender" Association="SessionProjectEntities.FK_User_Gender">
+            <End Role="Gender" EntitySet="Genders" />
+            <End Role="User" EntitySet="Users" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Product_MeasureUnit" Association="SessionProjectEntities.FK_Product_MeasureUnit">
+            <End Role="MeasureUnit" EntitySet="MeasureUnits" />
+            <End Role="Product" EntitySet="Products" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Order_OrderStatus" Association="SessionProjectEntities.FK_Order_OrderStatus">
+            <End Role="OrderStatu" EntitySet="OrderStatus" />
+            <End Role="Order" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Order_Product_Order" Association="SessionProjectEntities.FK_Order_Product_Order">
+            <End Role="Order" EntitySet="Orders" />
+            <End Role="Order_Product" EntitySet="Order_Product" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Order_User" Association="SessionProjectEntities.FK_Order_User">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Order" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Order_User1" Association="SessionProjectEntities.FK_Order_User1">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Order" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductsReceipt_Order" Association="SessionProjectEntities.FK_ProductsReceipt_Order">
+            <End Role="Order" EntitySet="Orders" />
+            <End Role="ProductsReceipt" EntitySet="ProductsReceipts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Order_Product_Product" Association="SessionProjectEntities.FK_Order_Product_Product">
+            <End Role="Product" EntitySet="Products" />
+            <End Role="Order_Product" EntitySet="Order_Product" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User_Role" Association="SessionProjectEntities.FK_User_Role">
+            <End Role="Role" EntitySet="Roles" />
+            <End Role="User" EntitySet="Users" />
+          </AssociationSet>
+          <AssociationSet Name="Product_SupplierCountry" Association="SessionProjectEntities.Product_SupplierCountry">
+            <End Role="Product" EntitySet="Products" />
+            <End Role="SupplierCountry" EntitySet="SupplierCountries" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Gender">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="Title" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Users" Relationship="SessionProjectEntities.FK_User_Gender" FromRole="Gender" ToRole="User" />
+        </EntityType>
+        <EntityType Name="MeasureUnit">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="Title" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Products" Relationship="SessionProjectEntities.FK_Product_MeasureUnit" FromRole="MeasureUnit" ToRole="Product" />
+        </EntityType>
+        <EntityType Name="Order">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="DateTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UserCustomerID" Type="Int32" Nullable="false" />
+          <Property Name="UserExecutorID" Type="Int32" Nullable="false" />
+          <Property Name="OrderStatusID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="OrderStatu" Relationship="SessionProjectEntities.FK_Order_OrderStatus" FromRole="Order" ToRole="OrderStatu" />
+          <NavigationProperty Name="Order_Product" Relationship="SessionProjectEntities.FK_Order_Product_Order" FromRole="Order" ToRole="Order_Product" />
+          <NavigationProperty Name="User" Relationship="SessionProjectEntities.FK_Order_User" FromRole="Order" ToRole="User" />
+          <NavigationProperty Name="User1" Relationship="SessionProjectEntities.FK_Order_User1" FromRole="Order" ToRole="User" />
+          <NavigationProperty Name="ProductsReceipts" Relationship="SessionProjectEntities.FK_ProductsReceipt_Order" FromRole="Order" ToRole="ProductsReceipt" />
+        </EntityType>
+        <EntityType Name="Order_Product">
+          <Key>
+            <PropertyRef Name="OrderID" />
+            <PropertyRef Name="ProductID" />
+          </Key>
+          <Property Name="OrderID" Type="Int32" Nullable="false" />
+          <Property Name="ProductID" Type="Int32" Nullable="false" />
+          <Property Name="Quantity" Type="Int32" Nullable="false" />
+          <Property Name="PurchasePrice" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <NavigationProperty Name="Order" Relationship="SessionProjectEntities.FK_Order_Product_Order" FromRole="Order_Product" ToRole="Order" />
+          <NavigationProperty Name="Product" Relationship="SessionProjectEntities.FK_Order_Product_Product" FromRole="Order_Product" ToRole="Product" />
+        </EntityType>
+        <EntityType Name="OrderStatu">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="Title" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Orders" Relationship="SessionProjectEntities.FK_Order_OrderStatus" FromRole="OrderStatu" ToRole="Order" />
+        </EntityType>
+        <EntityType Name="Product">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="Title" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="Photo" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="Cost" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="Description" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="AdditionDateTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Quantity" Type="Int32" Nullable="false" />
+          <Property Name="MeasureUnitID" Type="Int32" Nullable="false" />
+          <Property Name="SupplierCountryID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="MeasureUnit" Relationship="SessionProjectEntities.FK_Product_MeasureUnit" FromRole="Product" ToRole="MeasureUnit" />
+          <NavigationProperty Name="Order_Product" Relationship="SessionProjectEntities.FK_Order_Product_Product" FromRole="Product" ToRole="Order_Product" />
+          <NavigationProperty Name="SupplierCountries" Relationship="SessionProjectEntities.Product_SupplierCountry" FromRole="Product" ToRole="SupplierCountry" />
+        </EntityType>
+        <EntityType Name="ProductsReceipt">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="OrderID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Order" Relationship="SessionProjectEntities.FK_ProductsReceipt_Order" FromRole="ProductsReceipt" ToRole="Order" />
+        </EntityType>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="Title" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Users" Relationship="SessionProjectEntities.FK_User_Role" FromRole="Role" ToRole="User" />
+        </EntityType>
+        <EntityType Name="Supplier">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="SupplierCountry">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="TItle" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Products" Relationship="SessionProjectEntities.Product_SupplierCountry" FromRole="SupplierCountry" ToRole="Product" />
+        </EntityType>
+        <EntityType Name="sysdiagram">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="Login" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Password" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="RoleID" Type="Int32" Nullable="false" />
+          <Property Name="LastName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="FirstName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Patronymic" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneNumber" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="320" FixedLength="false" Unicode="true" />
+          <Property Name="GenderID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Gender" Relationship="SessionProjectEntities.FK_User_Gender" FromRole="User" ToRole="Gender" />
+          <NavigationProperty Name="Orders" Relationship="SessionProjectEntities.FK_Order_User" FromRole="User" ToRole="Order" />
+          <NavigationProperty Name="Orders1" Relationship="SessionProjectEntities.FK_Order_User1" FromRole="User" ToRole="Order" />
+          <NavigationProperty Name="Role" Relationship="SessionProjectEntities.FK_User_Role" FromRole="User" ToRole="Role" />
+        </EntityType>
+        <Association Name="FK_User_Gender">
+          <End Type="SessionProjectEntities.Gender" Role="Gender" Multiplicity="1" />
+          <End Type="SessionProjectEntities.User" Role="User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Gender">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="GenderID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Product_MeasureUnit">
+          <End Type="SessionProjectEntities.MeasureUnit" Role="MeasureUnit" Multiplicity="1" />
+          <End Type="SessionProjectEntities.Product" Role="Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MeasureUnit">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="MeasureUnitID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Order_OrderStatus">
+          <End Type="SessionProjectEntities.OrderStatu" Role="OrderStatu" Multiplicity="1" />
+          <End Type="SessionProjectEntities.Order" Role="Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="OrderStatu">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="OrderStatusID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Order_Product_Order">
+          <End Type="SessionProjectEntities.Order" Role="Order" Multiplicity="1" />
+          <End Type="SessionProjectEntities.Order_Product" Role="Order_Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Order">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Order_Product">
+              <PropertyRef Name="OrderID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Order_User">
+          <End Type="SessionProjectEntities.User" Role="User" Multiplicity="1" />
+          <End Type="SessionProjectEntities.Order" Role="Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="UserExecutorID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Order_User1">
+          <End Type="SessionProjectEntities.User" Role="User" Multiplicity="1" />
+          <End Type="SessionProjectEntities.Order" Role="Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="OrderStatusID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductsReceipt_Order">
+          <End Type="SessionProjectEntities.Order" Role="Order" Multiplicity="1" />
+          <End Type="SessionProjectEntities.ProductsReceipt" Role="ProductsReceipt" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Order">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ProductsReceipt">
+              <PropertyRef Name="OrderID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Order_Product_Product">
+          <End Type="SessionProjectEntities.Product" Role="Product" Multiplicity="1" />
+          <End Type="SessionProjectEntities.Order_Product" Role="Order_Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Order_Product">
+              <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_User_Role">
+          <End Type="SessionProjectEntities.Role" Role="Role" Multiplicity="1" />
+          <End Type="SessionProjectEntities.User" Role="User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="RoleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Product_SupplierCountry">
+          <End Type="SessionProjectEntities.Product" Role="Product" Multiplicity="*" />
+          <End Type="SessionProjectEntities.SupplierCountry" Role="SupplierCountry" Multiplicity="*" />
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище SessionProjectEntitiesContainer" CdmEntityContainer="SessionDBEntities">
+          <EntitySetMapping Name="Genders">
+            <EntityTypeMapping TypeName="SessionProjectEntities.Gender">
+              <MappingFragment StoreEntitySet="Gender">
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MeasureUnits">
+            <EntityTypeMapping TypeName="SessionProjectEntities.MeasureUnit">
+              <MappingFragment StoreEntitySet="MeasureUnit">
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Orders">
+            <EntityTypeMapping TypeName="SessionProjectEntities.Order">
+              <MappingFragment StoreEntitySet="Order">
+                <ScalarProperty Name="OrderStatusID" ColumnName="OrderStatusID" />
+                <ScalarProperty Name="UserExecutorID" ColumnName="UserExecutorID" />
+                <ScalarProperty Name="UserCustomerID" ColumnName="UserCustomerID" />
+                <ScalarProperty Name="DateTime" ColumnName="DateTime" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Order_Product">
+            <EntityTypeMapping TypeName="SessionProjectEntities.Order_Product">
+              <MappingFragment StoreEntitySet="Order_Product">
+                <ScalarProperty Name="PurchasePrice" ColumnName="PurchasePrice" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+                <ScalarProperty Name="OrderID" ColumnName="OrderID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OrderStatus">
+            <EntityTypeMapping TypeName="SessionProjectEntities.OrderStatu">
+              <MappingFragment StoreEntitySet="OrderStatus">
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Products">
+            <EntityTypeMapping TypeName="SessionProjectEntities.Product">
+              <MappingFragment StoreEntitySet="Product">
+                <ScalarProperty Name="SupplierCountryID" ColumnName="SupplierCountryID" />
+                <ScalarProperty Name="MeasureUnitID" ColumnName="MeasureUnitID" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="AdditionDateTime" ColumnName="AdditionDateTime" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Cost" ColumnName="Cost" />
+                <ScalarProperty Name="Photo" ColumnName="Photo" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProductsReceipts">
+            <EntityTypeMapping TypeName="SessionProjectEntities.ProductsReceipt">
+              <MappingFragment StoreEntitySet="ProductsReceipt">
+                <ScalarProperty Name="OrderID" ColumnName="OrderID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Roles">
+            <EntityTypeMapping TypeName="SessionProjectEntities.Role">
+              <MappingFragment StoreEntitySet="Role">
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Suppliers">
+            <EntityTypeMapping TypeName="SessionProjectEntities.Supplier">
+              <MappingFragment StoreEntitySet="Supplier">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SupplierCountries">
+            <EntityTypeMapping TypeName="SessionProjectEntities.SupplierCountry">
+              <MappingFragment StoreEntitySet="SupplierCountry">
+                <ScalarProperty Name="TItle" ColumnName="TItle" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="SessionProjectEntities.sysdiagram">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="definition" ColumnName="definition" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="SessionProjectEntities.User">
+              <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="GenderID" ColumnName="GenderID" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="Patronymic" ColumnName="Patronymic" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="RoleID" ColumnName="RoleID" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Login" ColumnName="Login" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="Product_SupplierCountry" TypeName="SessionProjectEntities.Product_SupplierCountry" StoreEntitySet="Product_SupplierCountry">
+            <EndProperty Name="SupplierCountry">
+              <ScalarProperty Name="ID" ColumnName="SupplierCountryID" />
+            </EndProperty>
+            <EndProperty Name="Product">
+              <ScalarProperty Name="ID" ColumnName="ProductID" />
+            </EndProperty>
+          </AssociationSetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
