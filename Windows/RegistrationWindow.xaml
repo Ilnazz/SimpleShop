@@ -1,12 +1,15 @@
-﻿<Page x:Class="SessionProject.Pages.RegistrationPage"
-      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:SessionProject.Pages"
-      mc:Ignorable="d" d:Background="White"
-      Title="Регистрация пользователя"
-      Style="{StaticResource CommonStyle}">
+﻿<Window x:Class="SessionProject.Windows.RegistrationWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SessionProject"
+        mc:Ignorable="d" d:Background="White"
+        Title="Регистрация"
+        WindowStartupLocation="CenterScreen"
+        SizeToContent="WidthAndHeight"
+        Style="{StaticResource CommonStyle}"
+        DataContext="{Binding RelativeSource={RelativeSource Self}}">
     <ScrollViewer VerticalScrollBarVisibility="Auto">
         <StackPanel HorizontalAlignment="Center" Margin="5">
             <TextBlock Text="Регистрация нового пользователя" Margin="0,0,0,5"/>
@@ -41,4 +44,4 @@
             <Button x:Name="ButtonRegiser" Content="Зарегистрироваться" Click="ButtonRegiser_Click"/>
         </StackPanel>
     </ScrollViewer>
-</Page>
+</Window>

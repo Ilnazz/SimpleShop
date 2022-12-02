@@ -11,32 +11,25 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace SessionProject.Pages
+namespace SessionProject.Windows
 {
     /// <summary>
-    /// Логика взаимодействия для RegistrationPage.xaml
+    /// Логика взаимодействия для RegistrationWindow.xaml
     /// </summary>
-    public partial class RegistrationPage : Page
+    public partial class RegistrationWindow : Window
     {
-        public RegistrationPage()
+        public RegistrationWindow()
         {
             InitializeComponent();
         }
 
         private void ButtonRegiser_Click(object sender, RoutedEventArgs e)
         {
-            TBLastName.Text = TBLastName.Text.Trim();
-            TBFirstName.Text = TBFirstName.Text.Trim();
-            TBPatronymic.Text = TBPatronymic.Text.Trim();
-            TBPhoneNumber.Text = TBPhoneNumber.Text.Trim();
-            TBEmail.Text = TBEmail.Text.Trim();
-            TBLogin.Text = TBLogin.Text.Trim();
-            PBPassword.Password = PBPassword.Password.Trim();
+            NormalizeInputData();
 
-            if (AreAllFieldFilled() == false)
+            if (AreAllFieldsFilled() == false)
             {
                 MessageBox.Show("Заполните все данные");
                 return;
@@ -47,13 +40,14 @@ namespace SessionProject.Pages
                 MessageBox.Show("Выберите пол");
                 return;
             }
-            
+
             if (IsLoginValid(TBLogin.Text) == false)
             {
                 MessageBox.Show("Логин должен содержать как минимум: " +
                     "6 символов, " +
                     "1 прописную букву, " +
-                    "1 цифру, один символ из набора - !@#$%^");
+                    "1 цифру, " +
+                    "1 символ из набора - !@#$%^");
                 return;
             }
 
@@ -78,6 +72,44 @@ namespace SessionProject.Pages
                 return;
             }
 
+            var newUser = CreateNewUser();
+            App.DB.Users.Add(newUser);
+            App.DB.SaveChanges();
+
+            MessageBox.Show("Пользователь зарегистрирован");
+        }
+
+        private void NormalizeInputData()
+        {
+            TBLastName.Text = TBLastName.Text.Trim();
+            TBFirstName.Text = TBFirstName.Text.Trim();
+            TBPatronymic.Text = TBPatronymic.Text.Trim();
+            TBPhoneNumber.Text = TBPhoneNumber.Text.Trim();
+            TBEmail.Text = TBEmail.Text.Trim();
+            TBLogin.Text = TBLogin.Text.Trim();
+            PBPassword.Password = PBPassword.Password.Trim();
+        }
+
+        private bool AreAllFieldsFilled()
+            => TBLastName.Text != ""
+                && TBFirstName.Text != ""
+                && TBPatronymic.Text != ""
+                && TBPhoneNumber.Text != ""
+                && TBEmail.Text != ""
+                && TBLogin.Text != ""
+                && PBPassword.Password != "";
+
+        private bool IsLoginValid(string login)
+        {
+            var specialSymbols = "!@#$%^";
+            return login.Length < 6 // минимум 6 символов
+                || login.Any(letter => char.IsUpper(letter)) == false // минимум одна прописная буква
+                || login.Any(letter => char.IsDigit(letter)) == false // минимум одна цифра
+                || login.Any(letter => specialSymbols.Contains(letter)) == false; // минимум один символ из набора !@#$%^
+        }
+
+        private User CreateNewUser()
+        {
             var newUser = new User();
             newUser.Role = App.DB.Roles.First(role => role.Title == "Customer");
             newUser.LastName = TBLastName.Text;
@@ -88,35 +120,13 @@ namespace SessionProject.Pages
                 newUser.Gender = App.DB.Genders.First(gender => gender.Title == "Male");
             else
                 newUser.Gender = App.DB.Genders.First(gender => gender.Title == "Female");
-            
+
             newUser.PhoneNumber = TBPhoneNumber.Text;
             newUser.Email = TBEmail.Text;
             newUser.Login = TBLogin.Text;
             newUser.Password = PBPassword.Password;
 
-            App.DB.Users.Add(newUser);
-            App.DB.SaveChanges();
-            MessageBox.Show("Пользователь успешно зарегистрирован");
-        }
-
-        private bool AreAllFieldFilled()
-        {
-            return TBLastName.Text != ""
-                && TBFirstName.Text != ""
-                && TBPatronymic.Text != ""
-                && TBPhoneNumber.Text != ""
-                && TBEmail.Text != ""
-                && TBLogin.Text != ""
-                && PBPassword.Password != "";
-        }
-
-        private bool IsLoginValid(string login)
-        {
-            var specialSymbols = "!@#$%^";
-            return login.Length < 6 // минимум 6 символов
-                || login.Any(letter => char.IsUpper(letter)) == false // минимум одна прописная буква
-                || login.Any(letter => char.IsDigit(letter)) == false // минимум одна цифра
-                || login.Any(letter => specialSymbols.Contains(letter)) == false; // минимум один символ из набора !@#$%^
+            return newUser;
         }
     }
 }

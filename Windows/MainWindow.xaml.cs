@@ -15,7 +15,7 @@ using System.Windows.Shapes;
 
 using SessionProject.Pages;
 
-namespace SessionProject
+namespace SessionProject.Windows
 {
     /// <summary>
     /// Логика взаимодействия для MainWindow.xaml
@@ -25,8 +25,6 @@ namespace SessionProject
         public MainWindow()
         {
             InitializeComponent();
-
-            NavigationFrame.Navigate(new AuthorizationPage());
         }
     }
 }

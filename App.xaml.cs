@@ -17,5 +17,6 @@ namespace SessionProject
     {
         public static SessionDBEntities DB = new SessionDBEntities();
 
+        public static User CurrentUser = null;
     }
 }
