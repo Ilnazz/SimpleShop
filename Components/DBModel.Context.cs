@@ -33,9 +33,7 @@ namespace SessionProject.Components
         public virtual DbSet<Product> Products { get; set; }
         public virtual DbSet<ProductsReceipt> ProductsReceipts { get; set; }
         public virtual DbSet<Role> Roles { get; set; }
-        public virtual DbSet<Supplier> Suppliers { get; set; }
         public virtual DbSet<SupplierCountry> SupplierCountries { get; set; }
-        public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
         public virtual DbSet<User> Users { get; set; }
     }
 }

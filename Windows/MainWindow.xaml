@@ -4,12 +4,11 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SessionProject"
-        mc:Ignorable="d"
-        Title="Проект по сессии" Height="600" Width="1000"
+        mc:Ignorable="d" WindowState="Maximized" WindowStyle="ThreeDBorderWindow"
+        Title="Проект по сессии"
         Style="{StaticResource CommonStyle}">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
@@ -19,6 +18,10 @@
             <TextBlock Text="Проект" VerticalAlignment="Center" FontSize="14"/>
         </StackPanel>
 
-        <Frame x:Name="NavigationFrame" Grid.Row="2"/>
+        <TabControl Grid.Row="1">
+            <TabItem Header="Список продуктов">
+                <Frame NavigationUIVisibility="Hidden" Source="../Pages/ProductListPage.xaml"/>
+            </TabItem>
+        </TabControl>
     </Grid>
 </Window>

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
+using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
@@ -18,5 +19,10 @@ namespace SessionProject
         public static SessionDBEntities DB = new SessionDBEntities();
 
         public static User CurrentUser = null;
+
+        static App()
+        {
+            DB.Products.Load();
+        }
     }
 }

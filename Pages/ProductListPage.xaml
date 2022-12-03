@@ -4,11 +4,135 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:SessionProject.Pages"
-      mc:Ignorable="d"
-      d:DesignHeight="600" d:DesignWidth="1000"
+      xmlns:components="clr-namespace:SessionProject.Components"
+      mc:Ignorable="d" d:Background="White"
       Title="Список продуктов"
-      Style="{StaticResource CommonStyle}">
+      Style="{StaticResource CommonStyle}"
+      DataContext="{Binding RelativeSource={RelativeSource Self}}">
     <Grid>
-        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="0" Grid.Column="0" Margin="5">
+            <Label Content="Поиск:"/>
+            <components:SearchBoxComponent x:Name="SearchBox" SearchPlaceHolder="Введите для поиска..."/>
+        </StackPanel>
+
+        <Border Grid.Row="0" Grid.Column="1" Margin="5">
+            <StackPanel>
+                <Label Content="Сортировка:"/>
+                <ComboBox x:Name="CBSorting" VerticalAlignment="Center" ItemsSource="{Binding SortingTitles}" SelectedIndex="0"/>
+            </StackPanel>
+        </Border>
+
+        <Border Grid.Row="0" Grid.Column="2" Margin="5">
+            <StackPanel>
+                <Label Content="Фильтрация по ед. изм.:"/>
+                <ComboBox x:Name="CBFiltering" VerticalAlignment="Center" ItemsSource="{Binding FilteringTitles}" SelectedIndex="0"/>
+            </StackPanel>
+        </Border>
+
+        <Border Grid.Row="0" Grid.Column="3" Margin="5">
+            <StackPanel>
+                <Label Content="Добавленные в текущем месяце:" HorizontalAlignment="Center"/>
+                <CheckBox x:Name="CBAddedInCurrentMonth" VerticalAlignment="Center" HorizontalAlignment="Center" IsChecked="False"/>
+            </StackPanel>
+        </Border>
+
+        <Border Grid.Row="0" Grid.Column="4" Margin="5">
+            <StackPanel>
+                <Label Content="Число продуктов на странице:"/>
+                <ComboBox x:Name="CBProductsNumberPerPage" VerticalAlignment="Center" ItemsSource="{Binding ItemsNumberPerPageTitles}" SelectedIndex="0"/>
+            </StackPanel>
+        </Border>
+
+        <DataGrid x:Name="ProductList" Grid.Row="1" Grid.ColumnSpan="5"
+                  AutoGenerateColumns="False"
+                  IsReadOnly="True"
+                  SelectionMode="Single"
+                  ItemsSource="{Binding DisplayedProducts}">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="ID" Binding="{Binding ID}" Width="SizeToHeader"/>
+
+                <DataGridTemplateColumn Header="Фотография" Width="SizeToHeader">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Image Source="{Binding Photo, TargetNullValue={StaticResource ImagePlaceholder}}"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+                <DataGridTemplateColumn Header="Название" Width="SizeToHeader">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Title, Converter={StaticResource ProductTextConverter}}" TextWrapping="Wrap"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+                <DataGridTextColumn Header="Стоимость, руб." Binding="{Binding Cost, StringFormat={}{0:F}}" Width="SizeToHeader"/>
+
+                <DataGridTemplateColumn Header="Описание" Width="*">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Description, Converter={StaticResource ProductTextConverter}}" TextWrapping="Wrap"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+                <DataGridTextColumn Header="Дата добавления" Binding="{Binding AdditionDateTime, StringFormat={}{0:dd.MM.yyyy}}" Width="SizeToHeader"/>
+
+                <DataGridTextColumn Header="Единица измерения" Binding="{Binding MeasureUnit.Title}" Width="SizeToHeader"/>
+
+                <DataGridTemplateColumn Header="Страны поставщики" Width="SizeToHeader">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <ListBox ItemsSource="{Binding SupplierCountries}">
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding Title, StringFormat={}- {0}}"/>
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
+                            </ListBox>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+                <DataGridTextColumn Header="В наличии" Binding="{Binding Quantity}" Width="SizeToHeader"/>
+            </DataGrid.Columns>
+
+            <DataGrid.RowStyle>
+                <Style TargetType="DataGridRow">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding IsOutOfStock}" Value="True">
+                            <Setter Property="Background" Value="Gray"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </DataGrid.RowStyle>
+        </DataGrid>
+
+        <StackPanel Grid.Row="2" Grid.ColumnSpan="5" Orientation="Horizontal" HorizontalAlignment="Right" Margin="5">
+            <Button x:Name="BtnGoToPreviousPage" Content="&#60;" FontSize="28" FontWeight="Bold" Margin="0,0,5,0" BorderThickness="0" Background="Transparent"/>
+            <TextBlock x:Name="TBShownServicesCount" FontSize="18" Margin="0,0,5,0" VerticalAlignment="Center">
+                <TextBlock.Text>
+                    <MultiBinding StringFormat="{}Показазно {0} услуг из {1}">
+                        <Binding Path="DisplayedProductsNumber"/>
+                        <Binding Path="TotalProductsNumber"/>
+                    </MultiBinding>
+                </TextBlock.Text>
+            </TextBlock>
+            <Button x:Name="BtnGoToNextPage" Content="&#62;" FontSize="28" FontWeight="Bold" BorderThickness="0" Background="Transparent"/>
+        </StackPanel>
     </Grid>
 </Page>

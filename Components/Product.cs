@@ -29,7 +29,6 @@ namespace SessionProject.Components
         public System.DateTime AdditionDateTime { get; set; }
         public int Quantity { get; set; }
         public int MeasureUnitID { get; set; }
-        public int SupplierCountryID { get; set; }
     
         public virtual MeasureUnit MeasureUnit { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

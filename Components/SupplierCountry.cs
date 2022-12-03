@@ -21,7 +21,7 @@ namespace SessionProject.Components
         }
     
         public int ID { get; set; }
-        public string TItle { get; set; }
+        public string Title { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Product> Products { get; set; }
