@@ -87,6 +87,7 @@
           </Key>
           <Property Name="ID" Type="int" Nullable="false" />
           <Property Name="Title" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="HexColorCode" Type="char" MaxLength="6" Nullable="false" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -438,6 +439,7 @@
           <Property Name="ID" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Products" Relationship="SessionProjectEntities.Product_SupplierCountry" FromRole="SupplierCountry" ToRole="Product" />
           <Property Name="Title" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="HexColorCode" Type="String" Nullable="false" MaxLength="6" FixedLength="true" Unicode="false" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -654,6 +656,7 @@
           <EntitySetMapping Name="SupplierCountries">
             <EntityTypeMapping TypeName="SessionProjectEntities.SupplierCountry">
               <MappingFragment StoreEntitySet="SupplierCountry">
+                <ScalarProperty Name="HexColorCode" ColumnName="HexColorCode" />
                 <ScalarProperty Name="Title" ColumnName="Title" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>

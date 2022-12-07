@@ -34,6 +34,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Resources\logo.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
@@ -66,10 +69,17 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Components\PartialClasses\Product.cs" />
+    <Compile Include="Components\PartialClasses\SupplierCountry.cs" />
     <Compile Include="Components\SearchBoxComponent.xaml.cs">
       <DependentUpon>SearchBoxComponent.xaml</DependentUpon>
     </Compile>
     <Compile Include="Converters\ProductTextConverter.cs" />
+    <Compile Include="Windows\AddEditProductWindow.xaml.cs">
+      <DependentUpon>AddEditProductWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\SelectSupplierCountryWindow.xaml.cs">
+      <DependentUpon>SelectSupplierCountryWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Windows\RegistrationWindow.xaml.cs">
       <DependentUpon>RegistrationWindow.xaml</DependentUpon>
     </Compile>
@@ -77,7 +87,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Windows\AddEditProductWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Windows\AuthorizationWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\SelectSupplierCountryWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -201,8 +219,10 @@
       <DependentUpon>DBModel.edmx</DependentUpon>
       <LastGenOutput>DBModel.cs</LastGenOutput>
     </Content>
-    <None Include="Resources\image_placeholder.png" />
-    <None Include="Resources\logo.png" />
+    <Resource Include="Resources\add-photo.png" />
+    <Resource Include="Resources\logo.ico" />
+    <Resource Include="Resources\no-photo.png" />
+    <Resource Include="Resources\logo.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

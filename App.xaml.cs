@@ -22,6 +22,7 @@ namespace SessionProject
 
         static App()
         {
+            DB.SupplierCountries.Load();
             DB.Products.Load();
         }
     }

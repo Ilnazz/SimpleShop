@@ -23,11 +23,12 @@
             <Label Target="{Binding ElementName=TBLastName}" Content="Отчество:" Margin="0,0,0,5"/>
             <TextBox x:Name="TBPatronymic" Margin="0,0,0,5" MaxLength="50"/>
 
-            <StackPanel Orientation="Horizontal" Margin="0,0,0,5">
-                <Label Content="Пол:"/>
-                <RadioButton x:Name="RBGenderMale" Content="Мужской" VerticalContentAlignment="Center" Margin="0,0,5,0"/>
-                <RadioButton x:Name="RBGenderFemale" Content="Женский" VerticalContentAlignment="Center"/>
-            </StackPanel>
+            <GroupBox Header="Пол" Margin="0,0,0,5">
+                <StackPanel Orientation="Horizontal">
+                    <RadioButton x:Name="RBGenderMale" Content="Мужской" VerticalContentAlignment="Center" Margin="0,5,5,0"/>
+                    <RadioButton x:Name="RBGenderFemale" Content="Женский" VerticalContentAlignment="Center" Margin="0,5,5,0"/>
+                </StackPanel>
+            </GroupBox>
 
             <Label Target="{Binding ElementName=TBPhoneNumber}" Content="Номер телефона:" Margin="0,0,0,5"/>
             <TextBox x:Name="TBPhoneNumber" Margin="0,0,0,5" MaxLength="50"/>

@@ -56,6 +56,11 @@
             </StackPanel>
         </Border>
 
+        <!--<ListBox x:Name="ProductList" Grid.Row="1" Grid.ColumnSpan="5" SelectionMode="Single"
+                 ItemsSource="{Binding DisplayedProducts}">
+
+        </ListBox>-->
+
         <DataGrid x:Name="ProductList" Grid.Row="1" Grid.ColumnSpan="5"
                   AutoGenerateColumns="False"
                   IsReadOnly="True"
@@ -64,10 +69,11 @@
             <DataGrid.Columns>
                 <DataGridTextColumn Header="ID" Binding="{Binding ID}" Width="SizeToHeader"/>
 
-                <DataGridTemplateColumn Header="Фотография" Width="SizeToHeader">
+                <DataGridTemplateColumn Header="Фотография" Width="SizeToCells">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <Image Source="{Binding Photo, TargetNullValue={StaticResource ImagePlaceholder}}"/>
+                            <Image Width="100" Margin="5"
+                                   Source="{Binding Photo, TargetNullValue={StaticResource NoPhoto}}"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
@@ -90,20 +96,31 @@
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
 
-                <DataGridTextColumn Header="Дата добавления" Binding="{Binding AdditionDateTime, StringFormat={}{0:dd.MM.yyyy}}" Width="SizeToHeader"/>
+                <DataGridTextColumn Header="Дата добавления" Binding="{Binding AdditionDateTime, StringFormat={}{0:d}}" Width="SizeToHeader"/>
 
                 <DataGridTextColumn Header="Единица измерения" Binding="{Binding MeasureUnit.Title}" Width="SizeToHeader"/>
 
                 <DataGridTemplateColumn Header="Страны поставщики" Width="SizeToHeader">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <ListBox ItemsSource="{Binding SupplierCountries}">
-                                <ListBox.ItemTemplate>
-                                    <DataTemplate>
-                                        <TextBlock Text="{Binding Title, StringFormat={}- {0}}"/>
-                                    </DataTemplate>
-                                </ListBox.ItemTemplate>
-                            </ListBox>
+                            <Expander Header="Страны поставщики">
+                                <ListBox ItemsSource="{Binding SupplierCountries}">
+                                    <ListBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <Grid Margin="5">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="Auto"/>
+                                                    <ColumnDefinition Width="*"/>
+                                                </Grid.ColumnDefinitions>
+                                                <TextBlock Text="{Binding Title, StringFormat={}* {0}}" Grid.Column="0" Margin="0,0,5,0"/>
+                                                <Rectangle Fill="{Binding Brush}" Grid.Column="1"
+                                                       Width="{Binding Width, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Grid}}}"
+                                                       Height="{Binding Height, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Grid}}}"/>
+                                            </Grid>
+                                        </DataTemplate>
+                                    </ListBox.ItemTemplate>
+                                </ListBox>
+                            </Expander>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
@@ -115,24 +132,31 @@
                 <Style TargetType="DataGridRow">
                     <Style.Triggers>
                         <DataTrigger Binding="{Binding IsOutOfStock}" Value="True">
-                            <Setter Property="Background" Value="Gray"/>
+                            <Setter Property="Background" Value="Gainsboro"/>
                         </DataTrigger>
                     </Style.Triggers>
                 </Style>
             </DataGrid.RowStyle>
         </DataGrid>
 
-        <StackPanel Grid.Row="2" Grid.ColumnSpan="5" Orientation="Horizontal" HorizontalAlignment="Right" Margin="5">
-            <Button x:Name="BtnGoToPreviousPage" Content="&#60;" FontSize="28" FontWeight="Bold" Margin="0,0,5,0" BorderThickness="0" Background="Transparent"/>
-            <TextBlock x:Name="TBShownServicesCount" FontSize="18" Margin="0,0,5,0" VerticalAlignment="Center">
-                <TextBlock.Text>
-                    <MultiBinding StringFormat="{}Показазно {0} услуг из {1}">
-                        <Binding Path="DisplayedProductsNumber"/>
-                        <Binding Path="TotalProductsNumber"/>
-                    </MultiBinding>
-                </TextBlock.Text>
-            </TextBlock>
-            <Button x:Name="BtnGoToNextPage" Content="&#62;" FontSize="28" FontWeight="Bold" BorderThickness="0" Background="Transparent"/>
-        </StackPanel>
+        <DockPanel Grid.Row="2" Grid.ColumnSpan="5" Margin="5">
+            <StackPanel Orientation="Horizontal" DockPanel.Dock="Right">
+                <Button x:Name="BtnGoToPreviousPage" Content="&#60;" FontSize="28" FontWeight="Bold" Margin="0,0,5,0" BorderThickness="0" Background="Transparent"/>
+                <TextBlock x:Name="TBShownServicesCount" FontSize="18" Margin="0,0,5,0" VerticalAlignment="Center">
+                    <TextBlock.Text>
+                        <MultiBinding StringFormat="{}Показазно {0} услуг из {1}">
+                            <Binding Path="DisplayedProductsNumber"/>
+                            <Binding Path="TotalProductsNumber"/>
+                        </MultiBinding>
+                    </TextBlock.Text>
+                </TextBlock>
+                <Button x:Name="BtnGoToNextPage" Content="&#62;" FontSize="28" FontWeight="Bold" BorderThickness="0" Background="Transparent"/>
+            </StackPanel>
+            
+            <StackPanel Orientation="Horizontal" DockPanel.Dock="Left">
+                <Button x:Name="BtnAddProduct" Content="Добавить продукт" Margin="0,0,5,0" Click="BtnAddProduct_Click"/>
+                <Button x:Name="BtnEditProduct" Content="Редактировать продукт" Click="BtnEditProduct_Click"/>
+            </StackPanel>
+        </DockPanel>
     </Grid>
 </Page>

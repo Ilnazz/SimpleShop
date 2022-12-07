@@ -17,6 +17,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 using SessionProject.Components;
+using SessionProject.Windows;
 
 namespace SessionProject.Pages
 {
@@ -33,17 +34,17 @@ namespace SessionProject.Pages
 
         public enum Filtering
         {
-            All, Milligramm, Gramm, Kilogramm, Milliliter, Liter, Piece
+            All, Gramm, Kilogramm, Milliliter, Liter, Piece, Package
         }
         private readonly Dictionary<Filtering, string> _filteringTitles = new Dictionary<Filtering, string>()
         {
             { Filtering.All, "Все" },
-            { Filtering.Milligramm, "Миллиграмм" },
             { Filtering.Gramm, "Грамм" },
             { Filtering.Kilogramm, "Килограмм" },
             { Filtering.Milliliter, "Миллилитр" },
             { Filtering.Liter, "Литр" },
-            { Filtering.Piece, "Штука" }
+            { Filtering.Piece, "Штука" },
+            { Filtering.Package, "Упаковка" }
         };
         public IEnumerable<string> FilteringTitles { get => _filteringTitles.Values; }
         public Filtering CurrentFiltering { get => _filteringTitles.Keys.ElementAt(CBFiltering?.SelectedIndex ?? 0); }
@@ -148,12 +149,12 @@ namespace SessionProject.Pages
                     && p.AdditionDateTime.Month != DateTime.Now.Month)
                     return false;
 
-                if (CurrentFiltering == Filtering.Milligramm && p.MeasureUnit.Title != "Миллиграмм"
-                    || CurrentFiltering == Filtering.Gramm && p.MeasureUnit.Title != "Грамм"
+                if (CurrentFiltering == Filtering.Gramm && p.MeasureUnit.Title != "Грамм"
                     || CurrentFiltering == Filtering.Kilogramm && p.MeasureUnit.Title != "Килограмм"
                     || CurrentFiltering == Filtering.Milliliter && p.MeasureUnit.Title != "Миллилитр"
                     || CurrentFiltering == Filtering.Liter && p.MeasureUnit.Title != "Литр"
-                    || CurrentFiltering == Filtering.Piece && p.MeasureUnit.Title != "Штука")
+                    || CurrentFiltering == Filtering.Piece && p.MeasureUnit.Title != "Штука"
+                    || CurrentFiltering == Filtering.Package && p.MeasureUnit.Title != "Упаковка")
                     return false;
 
                 if (SearchBox.IsEmpty() == false)
@@ -225,6 +226,25 @@ namespace SessionProject.Pages
                     CurrentPageNumber++;
                 Refresh();
             };
+        }
+
+        private void BtnAddProduct_Click(object sender, RoutedEventArgs e)
+        {
+            var addEditProductWindow = new AddEditProductWindow();
+            addEditProductWindow.ShowDialog();
+            Refresh();
+        }
+
+        private void BtnEditProduct_Click(object sender, RoutedEventArgs e)
+        {
+            if (ProductList.SelectedItem is Product selectedProduct == false)
+            {
+                MessageBox.Show("Выберите продукт для редактирования");
+                return;
+            }
+            var addEditProductWindow = new AddEditProductWindow(selectedProduct);
+            addEditProductWindow.ShowDialog();
+            Refresh();
         }
     }
 }

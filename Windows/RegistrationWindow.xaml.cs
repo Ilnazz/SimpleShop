@@ -41,9 +41,9 @@ namespace SessionProject.Windows
                 return;
             }
 
-            if (IsLoginValid(TBLogin.Text) == false)
+            if (IsPasswordValid(TBLogin.Text) == false)
             {
-                MessageBox.Show("Логин должен содержать как минимум: " +
+                MessageBox.Show("Пароль должен содержать как минимум: " +
                     "6 символов, " +
                     "1 прописную букву, " +
                     "1 цифру, " +
@@ -77,6 +77,7 @@ namespace SessionProject.Windows
             App.DB.SaveChanges();
 
             MessageBox.Show("Пользователь зарегистрирован");
+            Close();
         }
 
         private void NormalizeInputData()
@@ -99,13 +100,13 @@ namespace SessionProject.Windows
                 && TBLogin.Text != ""
                 && PBPassword.Password != "";
 
-        private bool IsLoginValid(string login)
+        private bool IsPasswordValid(string password)
         {
             var specialSymbols = "!@#$%^";
-            return login.Length < 6 // минимум 6 символов
-                || login.Any(letter => char.IsUpper(letter)) == false // минимум одна прописная буква
-                || login.Any(letter => char.IsDigit(letter)) == false // минимум одна цифра
-                || login.Any(letter => specialSymbols.Contains(letter)) == false; // минимум один символ из набора !@#$%^
+            return password.Length >= 6 // минимум 6 символов
+                && password.Any(letter => char.IsUpper(letter)) == true // минимум одна прописная буква
+                && password.Any(letter => char.IsDigit(letter)) == true // минимум одна цифра
+                && password.Any(letter => specialSymbols.Contains(letter)) == true; // минимум один символ из набора !@#$%^
         }
 
         private User CreateNewUser()

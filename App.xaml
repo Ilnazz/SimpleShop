@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:SessionProject"
              xmlns:converters="clr-namespace:SessionProject.Converters"
-             StartupUri="Windows/MainWindow.xaml">
+             StartupUri="Windows/AuthorizationWindow.xaml">
     <Application.Resources>
         <Style x:Key="CommonStyle">
             <Setter Property="Control.FontFamily" Value="Comic Sans MS"/>
@@ -11,7 +11,8 @@
         </Style>
 
         <BitmapImage x:Key="Logotype" UriSource="/Resources/logo.png"/>
-        <BitmapImage x:Key="ImagePlaceholder" UriSource="/Resources/image_placeholder.png"/>
+        <BitmapImage x:Key="AddPhoto" UriSource="/Resources/add-photo.png"/>
+        <BitmapImage x:Key="NoPhoto" UriSource="/Resources/no-photo.png"/>
 
         <converters:ProductTextConverter x:Key="ProductTextConverter"/>
     </Application.Resources>

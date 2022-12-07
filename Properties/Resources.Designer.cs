@@ -63,9 +63,9 @@ namespace SessionProject.Properties {
         /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap image_placeholder {
+        internal static System.Drawing.Bitmap AddPhoto {
             get {
-                object obj = ResourceManager.GetObject("image_placeholder", resourceCulture);
+                object obj = ResourceManager.GetObject("AddPhoto", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -73,9 +73,29 @@ namespace SessionProject.Properties {
         /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap logo {
+        internal static System.Drawing.Bitmap Logotype {
             get {
-                object obj = ResourceManager.GetObject("logo", resourceCulture);
+                object obj = ResourceManager.GetObject("Logotype", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Icon, аналогичного (Значок).
+        /// </summary>
+        internal static System.Drawing.Icon LogotypeIcon {
+            get {
+                object obj = ResourceManager.GetObject("LogotypeIcon", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap NoPhoto {
+            get {
+                object obj = ResourceManager.GetObject("NoPhoto", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
