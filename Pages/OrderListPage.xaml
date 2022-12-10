@@ -22,15 +22,16 @@
              SelectionMode="Single">
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <Grid Margin="0,0,0,5">
+                    <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
                             <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
 
                         <TextBlock Grid.Row="0"
@@ -44,12 +45,6 @@
                                 </MultiBinding>
                             </TextBlock.Text>
                         </TextBlock>
-
-                        <TextBlock Grid.Row="0"
-                                   Grid.Column="1"
-                                   TextWrapping="Wrap"
-                                   HorizontalAlignment="Right"
-                                   Text="{Binding OrderStatus.Title, StringFormat={}Состояние заказа: {0}}"/>
 
                         <StackPanel Grid.Row="1" Grid.Column="0">
                             <TextBlock TextWrapping="Wrap"
@@ -74,7 +69,7 @@
                                     <DataTemplate>
                                         <Border BorderBrush="Black"
                                                 BorderThickness="2.5"
-                                                Margin="0,0,5,0">
+                                                Margin="0,0,5,5">
                                             <StackPanel Margin="5">
                                                 <TextBlock Text="{Binding Product.Title}"/>
                                                 <TextBlock Text="{Binding Quantity, StringFormat={}Кол-во: {0}}"/>
@@ -96,6 +91,12 @@
                                 </MultiBinding>
                             </TextBlock.Text>
                         </TextBlock>
+
+                        <TextBlock Grid.Row="0"
+                                   Grid.Column="2"
+                                   TextWrapping="Wrap"
+                                   HorizontalAlignment="Right"
+                                   Text="{Binding OrderStatus.Title, StringFormat={}Состояние заказа: {0}}"/>
                     </Grid>
                 </DataTemplate>
             </ListBox.ItemTemplate>
