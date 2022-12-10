@@ -107,7 +107,7 @@ namespace SessionProject.Windows
 
             _authorizationAttemptNumber++;
 
-            if (_authorizationAttemptNumber > 3) // это 4-ая попытка входа
+            if (_authorizationAttemptNumber == 3) // это 3-ая попытка входа
             {
                 _authorizationAttemptNumber = 0;
 
@@ -130,8 +130,6 @@ namespace SessionProject.Windows
                 RememberUserLoginAndPassword();
             else
                 ResetRememberedUserLoginAndPassword();
-
-            MessageBox.Show("Пользователь авторизован");
 
             App.CurrentUser = user;
 

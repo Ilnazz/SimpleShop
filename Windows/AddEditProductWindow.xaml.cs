@@ -84,7 +84,6 @@ namespace SessionProject.Windows
             else
             {
                 _editingProduct = new Product();
-                _editingProduct.ID = App.DB.Products.Local.Last().ID + 1;
                 _editingProduct.AdditionDateTime = DateTime.Now;
             }
         }
@@ -94,17 +93,19 @@ namespace SessionProject.Windows
         /// </summary>
         private void InitializeMeasureUnitRadioButtons()
         {
-            foreach (var mu in App.DB.MeasureUnits)
+            App.DB.MeasureUnits.ToList().ForEach(mu =>
             {
-                var rb = new RadioButton
-                {
-                    VerticalAlignment = VerticalAlignment.Center,
-                    Margin = new Thickness(0, 0, 5, 0),
-                    Content = mu.Title,
-                    Tag = mu.ID
-                };
-                MeasureUnitRadioButtons.Children.Add(rb);
-            }
+                MeasureUnitRadioButtons.Children.Add(
+                    new RadioButton
+                    {
+                        VerticalAlignment = VerticalAlignment.Center,
+                        Margin = new Thickness(0, 0, 5, 0),
+                        Content = mu.Title,
+                        Tag = mu.ID
+                    }
+                );
+            });
+
             MeasureUnitRadioButtons.Children.Cast<RadioButton>().Last().Margin = new Thickness();
         }
 
@@ -149,7 +150,7 @@ namespace SessionProject.Windows
         {
             OpenFileDialog openFileDialog = new OpenFileDialog()
             {
-                Filter = "PNG Files (*.png)|*.png|JPG Files (*.jpg)|*.jpg|JPEG Files (*.jpeg)|*.jpeg",
+                Filter = "All image files (*.png, *.jpg, *.jpeg)|*.png;*.jpg;*.jpeg|PNG Files (*.png)|*.png|JPG Files (*.jpg)|*.jpg|JPEG Files (*.jpeg)|*.jpeg",
                 CheckPathExists = true
             };
             
@@ -202,22 +203,19 @@ namespace SessionProject.Windows
             {
                 if (murb.IsChecked == true)
                 {
-                    _editingProduct.MeasureUnitID = int.Parse(murb.Tag as string);
+                    _editingProduct.MeasureUnitID = int.Parse(murb.Tag.ToString());
                 }
             });
 
-            SupplierCountries.ToList().ForEach(sc =>
-            {
-                if (_editingProduct.SupplierCountries.Contains(sc) == false)
-                {
-                    _editingProduct.SupplierCountries.Add(sc);
-                }
-            });
+            _editingProduct.SupplierCountries.Clear();
+            SupplierCountries.ToList().ForEach(sc => _editingProduct.SupplierCountries.Add(sc));
 
-            if (App.DB.Products.Contains(_editingProduct) == false)
-                App.DB.Products.Add(_editingProduct);
+            if (_editingProduct.ID == 0)
+                App.DB.Products.Local.Add(_editingProduct);
 
             App.DB.SaveChanges();
+
+            Close();
         }
 
         /// <summary>
@@ -267,7 +265,7 @@ namespace SessionProject.Windows
                 MessageBox.Show("Название продукта не может быть пустым");
                 return false;
             }
-            else if (Regex.IsMatch(TBTitle.Text, @"^[\/\da-яА-Яa-zA-Z- ]+$") == false)
+            else if (Regex.IsMatch(TBTitle.Text, @"^[\/\da-яА-Яa-zA-Z\- ]+$") == false)
             {
                 MessageBox.Show("Название продукта должно содержать только буквы, пробелы и дефисы");
                 return false;
@@ -356,12 +354,14 @@ namespace SessionProject.Windows
 
             // Те страны поставщики, которые не привязаны к продукту
             var availableCountries = App.DB.SupplierCountries.Local
-                .Where(sc => _editingProduct.SupplierCountries.Contains(sc) == false);
+                .Where(sc => SupplierCountries.Contains(sc) == false);
 
             var selectSCWindow = new SelectSupplierCountryWindow(availableCountries);
             selectSCWindow.ShowDialog();
 
             SupplierCountries.Add(selectSCWindow.SelectedSupplierCountry);
+
+            ToggleSupplierCountryListVisibility();
         }
 
         /// <summary>
@@ -384,6 +384,8 @@ namespace SessionProject.Windows
             }
 
             SupplierCountries.Remove(selectedSP);
+
+            ToggleSupplierCountryListVisibility();
         }
 
         /// <summary>

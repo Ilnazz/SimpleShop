@@ -9,24 +9,24 @@
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Title" Type="nvarchar" MaxLength="10" Nullable="false" />
         </EntityType>
         <EntityType Name="MeasureUnit">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Title" Type="nvarchar" MaxLength="150" Nullable="false" />
         </EntityType>
         <EntityType Name="Order">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="DateTime" Type="datetime" Nullable="false" />
           <Property Name="UserCustomerID" Type="int" Nullable="false" />
-          <Property Name="UserExecutorID" Type="int" Nullable="false" />
+          <Property Name="UserExecutorID" Type="int" />
           <Property Name="OrderStatusID" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Order_Product">
@@ -43,14 +43,14 @@
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Title" Type="nvarchar" MaxLength="150" Nullable="false" />
         </EntityType>
         <EntityType Name="Product">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Title" Type="nvarchar" MaxLength="150" Nullable="false" />
           <Property Name="Photo" Type="varbinary(max)" />
           <Property Name="Cost" Type="money" Nullable="false" />
@@ -71,21 +71,21 @@
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="OrderID" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Role">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Title" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <EntityType Name="SupplierCountry">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Title" Type="nvarchar" MaxLength="150" Nullable="false" />
           <Property Name="HexColorCode" Type="char" MaxLength="6" Nullable="false" />
         </EntityType>
@@ -93,7 +93,7 @@
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Login" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Password" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="RoleID" Type="int" Nullable="false" />
@@ -141,7 +141,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Order_User">
-          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
           <End Role="Order" Type="Self.Order" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="User">
@@ -302,7 +302,7 @@
           <EntitySet Name="MeasureUnits" EntityType="SessionProjectEntities.MeasureUnit" />
           <EntitySet Name="Orders" EntityType="SessionProjectEntities.Order" />
           <EntitySet Name="Order_Product" EntityType="SessionProjectEntities.Order_Product" />
-          <EntitySet Name="OrderStatus" EntityType="SessionProjectEntities.OrderStatu" />
+          <EntitySet Name="OrderStatus1" EntityType="SessionProjectEntities.OrderStatus" />
           <EntitySet Name="Products" EntityType="SessionProjectEntities.Product" />
           <EntitySet Name="ProductsReceipts" EntityType="SessionProjectEntities.ProductsReceipt" />
           <EntitySet Name="Roles" EntityType="SessionProjectEntities.Role" />
@@ -317,7 +317,7 @@
             <End Role="Product" EntitySet="Products" />
           </AssociationSet>
           <AssociationSet Name="FK_Order_OrderStatus" Association="SessionProjectEntities.FK_Order_OrderStatus">
-            <End Role="OrderStatu" EntitySet="OrderStatus" />
+            <End Role="OrderStatu" EntitySet="OrderStatus1" />
             <End Role="Order" EntitySet="Orders" />
           </AssociationSet>
           <AssociationSet Name="FK_Order_Product_Order" Association="SessionProjectEntities.FK_Order_Product_Order">
@@ -372,9 +372,9 @@
           <Property Name="ID" Type="Int32" Nullable="false" />
           <Property Name="DateTime" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="UserCustomerID" Type="Int32" Nullable="false" />
-          <Property Name="UserExecutorID" Type="Int32" Nullable="false" />
+          <Property Name="UserExecutorID" Type="Int32" />
           <Property Name="OrderStatusID" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="OrderStatu" Relationship="SessionProjectEntities.FK_Order_OrderStatus" FromRole="Order" ToRole="OrderStatu" />
+          <NavigationProperty Name="OrderStatus" Relationship="SessionProjectEntities.FK_Order_OrderStatus" FromRole="Order" ToRole="OrderStatu" />
           <NavigationProperty Name="Order_Product" Relationship="SessionProjectEntities.FK_Order_Product_Order" FromRole="Order" ToRole="Order_Product" />
           <NavigationProperty Name="User" Relationship="SessionProjectEntities.FK_Order_User" FromRole="Order" ToRole="User" />
           <NavigationProperty Name="User1" Relationship="SessionProjectEntities.FK_Order_User1" FromRole="Order" ToRole="User" />
@@ -392,7 +392,7 @@
           <NavigationProperty Name="Order" Relationship="SessionProjectEntities.FK_Order_Product_Order" FromRole="Order_Product" ToRole="Order" />
           <NavigationProperty Name="Product" Relationship="SessionProjectEntities.FK_Order_Product_Product" FromRole="Order_Product" ToRole="Product" />
         </EntityType>
-        <EntityType Name="OrderStatu">
+        <EntityType Name="OrderStatus">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
@@ -437,9 +437,9 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Products" Relationship="SessionProjectEntities.Product_SupplierCountry" FromRole="SupplierCountry" ToRole="Product" />
           <Property Name="Title" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
           <Property Name="HexColorCode" Type="String" Nullable="false" MaxLength="6" FixedLength="true" Unicode="false" />
+          <NavigationProperty Name="Products" Relationship="SessionProjectEntities.Product_SupplierCountry" FromRole="SupplierCountry" ToRole="Product" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -485,7 +485,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Order_OrderStatus">
-          <End Type="SessionProjectEntities.OrderStatu" Role="OrderStatu" Multiplicity="1" />
+          <End Type="SessionProjectEntities.OrderStatus" Role="OrderStatu" Multiplicity="1" />
           <End Type="SessionProjectEntities.Order" Role="Order" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="OrderStatu">
@@ -509,7 +509,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Order_User">
-          <End Type="SessionProjectEntities.User" Role="User" Multiplicity="1" />
+          <End Type="SessionProjectEntities.User" Role="User" Multiplicity="0..1" />
           <End Type="SessionProjectEntities.Order" Role="Order" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="User">
@@ -572,7 +572,7 @@
           <End Type="SessionProjectEntities.Product" Role="Product" Multiplicity="*" />
           <End Type="SessionProjectEntities.SupplierCountry" Role="SupplierCountry" Multiplicity="*" />
         </Association>
-      </Schema>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
@@ -615,8 +615,8 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="OrderStatus">
-            <EntityTypeMapping TypeName="SessionProjectEntities.OrderStatu">
+          <EntitySetMapping Name="OrderStatus1">
+            <EntityTypeMapping TypeName="SessionProjectEntities.OrderStatus">
               <MappingFragment StoreEntitySet="OrderStatus">
                 <ScalarProperty Name="Title" ColumnName="Title" />
                 <ScalarProperty Name="ID" ColumnName="ID" />

@@ -12,10 +12,10 @@ namespace SessionProject.Components
     using System;
     using System.Collections.Generic;
     
-    public partial class OrderStatu
+    public partial class OrderStatus
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public OrderStatu()
+        public OrderStatus()
         {
             this.Orders = new HashSet<Order>();
         }

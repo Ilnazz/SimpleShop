@@ -4,16 +4,16 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="2d42b302e3084b2da9783858cbdd56b5" Name="Diagram1" ZoomLevel="109">
-        <EntityTypeShape EntityType="SessionProjectEntities.Gender" Width="1.5" PointX="0.75" PointY="0.75" />
+      <Diagram DiagramId="2d42b302e3084b2da9783858cbdd56b5" Name="Diagram1" ZoomLevel="105">
+        <EntityTypeShape EntityType="SessionProjectEntities.Gender" Width="1.5" PointX="0.75" PointY="3.75" />
         <EntityTypeShape EntityType="SessionProjectEntities.MeasureUnit" Width="1.5" PointX="3" PointY="12.75" />
         <EntityTypeShape EntityType="SessionProjectEntities.Order" Width="1.5" PointX="5.25" PointY="3.125" />
         <EntityTypeShape EntityType="SessionProjectEntities.Order_Product" Width="1.5" PointX="7.5" PointY="3.5" />
-        <EntityTypeShape EntityType="SessionProjectEntities.OrderStatu" Width="1.5" PointX="3" PointY="8.75" />
-        <EntityTypeShape EntityType="SessionProjectEntities.Product" Width="1.5" PointX="5.25" PointY="11.875" />
+        <EntityTypeShape EntityType="SessionProjectEntities.OrderStatus" Width="1.5" PointX="3" PointY="8.75" />
+        <EntityTypeShape EntityType="SessionProjectEntities.Product" Width="1.5" PointX="5.25" PointY="12" />
         <EntityTypeShape EntityType="SessionProjectEntities.ProductsReceipt" Width="1.5" PointX="7.5" PointY="6.625" />
-        <EntityTypeShape EntityType="SessionProjectEntities.Role" Width="1.5" PointX="0.75" PointY="3.75" />
-        <EntityTypeShape EntityType="SessionProjectEntities.SupplierCountry" Width="1.5" PointX="7.5" PointY="12.75" />
+        <EntityTypeShape EntityType="SessionProjectEntities.Role" Width="1.5" PointX="0.75" PointY="0.75" />
+        <EntityTypeShape EntityType="SessionProjectEntities.SupplierCountry" Width="1.5" PointX="7.5" PointY="12.625" />
         <EntityTypeShape EntityType="SessionProjectEntities.User" Width="1.5" PointX="3" PointY="2.75" />
         <AssociationConnector Association="SessionProjectEntities.FK_User_Gender" />
         <AssociationConnector Association="SessionProjectEntities.FK_Product_MeasureUnit" />

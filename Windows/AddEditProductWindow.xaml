@@ -6,19 +6,20 @@
         xmlns:local="clr-namespace:SessionProject.Windows"
         mc:Ignorable="d" d:Background="White"
         Title="Добавление/редактирование продукта"
-        SizeToContent="Height"
-        Width="500"
+        WindowStartupLocation="CenterOwner"
+        Width="750"
+        SizeToContent="WidthAndHeight"
         Style="{StaticResource CommonStyle}"
         Name="Root">
     <ScrollViewer VerticalScrollBarVisibility="Auto">
         <StackPanel Margin="5">
-            <Grid>
+            <Grid Margin="0,0,0,5">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
 
-                <StackPanel Grid.Column="0">
+                <StackPanel Grid.Column="0" Margin="0,0,5,0">
                     <StackPanel Margin="0,0,0,5">
                         <Label Content="Идентификатор:"/>
                         <TextBlock x:Name="TBIdentificator" TextWrapping="Wrap"/>
@@ -38,12 +39,18 @@
                         <Label Content="Стоимость, руб.:"/>
                         <TextBox x:Name="TBCost"/>
                     </StackPanel>
+
+                    <StackPanel>
+                        <Label Content="Описание:"/>
+                        <TextBox x:Name="TBDescription"
+                                 AcceptsReturn="True" TextWrapping="Wrap"/>
+                    </StackPanel>
                 </StackPanel>
 
                 <StackPanel Grid.Column="1">
-                    <GroupBox Header="Фотография" Margin="0,0,0,5" HorizontalAlignment="Center">
+                    <GroupBox Header="Фотография" HorizontalAlignment="Center">
                         <StackPanel>
-                            <Image x:Name="ImgPhoto" Width="200" Margin="5"
+                            <Image x:Name="ImgPhoto" Margin="5" Width="250"
                                Source="{Binding Photo, ElementName=Root, TargetNullValue={StaticResource AddPhoto}}"/>
                             <Button x:Name="BtnAddReplacePhoto" Content="Заменить фотографию" Click="BtnAddReplacePhoto_Click"/>
                         </StackPanel>
@@ -51,54 +58,60 @@
                 </StackPanel>
             </Grid>
 
-            <StackPanel Margin="0,0,0,5">
-                <Label Content="Описание:"/>
-                <TextBox x:Name="TBDescription"
-                     AcceptsReturn="True" TextWrapping="Wrap"/>
-            </StackPanel>
+            <Grid Margin="0,0,0,5" >
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
 
-            <GroupBox Header="Единица измерения" Margin="0,0,0,5" Padding="5">
-                <WrapPanel x:Name="MeasureUnitRadioButtons"/>
-            </GroupBox>
+                <GroupBox Header="Единица измерения" Padding="5" Grid.Column="0" Margin="0,0,5,0">
+                    <WrapPanel x:Name="MeasureUnitRadioButtons"/>
+                </GroupBox>
 
-            <StackPanel Margin="0,0,0,5">
-                <Label Target="{Binding ElementName=SupplierCountryList}" Content="Страны поставщики:"/>
-                <ListBox x:Name="SupplierCountryList"
-                     Margin="0,0,0,5"
-                     SelectionMode="Single"
-                     ItemsSource="{Binding SupplierCountries, ElementName=Root}">
-                    <ListBox.ItemTemplate>
-                        <DataTemplate>
-                            <Grid Margin="5">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto"/>
-                                    <ColumnDefinition Width="*"/>
-                                </Grid.ColumnDefinitions>
-                                <TextBlock Text="{Binding Title, StringFormat={}* {0}}" Grid.Column="0" Margin="0,0,5,0"/>
-                                <Rectangle Fill="{Binding Brush}" Grid.Column="1"
-                                       Width="{Binding Width, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Grid}}}"
-                                       Height="{Binding Height, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Grid}}}"/>
-                            </Grid>
-                        </DataTemplate>
-                    </ListBox.ItemTemplate>
-                </ListBox>
+                <StackPanel Grid.Column="1">
+                    <Label Target="{Binding ElementName=SupplierCountryList}" Content="Страны поставщики:"/>
+                    <ListBox x:Name="SupplierCountryList"
+                             Margin="0,0,0,5"
+                             SelectionMode="Single"
+                             ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                             ItemsSource="{Binding SupplierCountries, ElementName=Root}">
+                        <ListBox.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <WrapPanel IsItemsHost="True" />
+                            </ItemsPanelTemplate>
+                        </ListBox.ItemsPanel>
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <Grid Margin="5">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Border BorderBrush="{Binding Brush}" BorderThickness="5">
+                                        <TextBlock Text="{Binding Title}" Grid.Column="0" Margin="5"/>
+                                    </Border>
+                                </Grid>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
 
-                <TextBlock x:Name="TBThereAreNoSuppliers" Text="Поставщики не указаны" Margin="0,0,0,5" Visibility="Collapsed"/>
+                    <TextBlock x:Name="TBThereAreNoSuppliers" Text="Поставщики не указаны" Margin="0,0,0,5" Visibility="Collapsed"/>
 
-                <StackPanel Orientation="Horizontal" Margin="0,0,0,5">
-                    <Button x:Name="BtnAddSupplierCountry"
+                    <StackPanel Orientation="Horizontal" Margin="0,0,0,5">
+                        <Button x:Name="BtnAddSupplierCountry"
                         Content="Добавить"
                         Margin="0,0,5,0"
                         Click="BtnAddSupplierCountry_Click"/>
 
-                    <Button x:Name="BtnRemoveSupplierCountry"
+                        <Button x:Name="BtnRemoveSupplierCountry"
                         Content="Удалить"
                         Click="BtnRemoveSupplierCountry_Click"/>
+                    </StackPanel>
                 </StackPanel>
-            </StackPanel>
-
+            </Grid>
+            
             <Button x:Name="BtnSave" Content="Сохранить"
-                HorizontalAlignment="Right"
+                HorizontalAlignment="Left"
                 Click="BtnSave_Click"/>
         </StackPanel>
     </ScrollViewer>

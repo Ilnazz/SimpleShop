@@ -11,10 +11,7 @@
       DataContext="{Binding RelativeSource={RelativeSource Self}}">
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
@@ -23,45 +20,42 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <StackPanel Grid.Row="0" Grid.Column="0" Margin="5">
+        <StackPanel Grid.Row="0" Grid.RowSpan="2">
+            <Border Margin="5">
+                <StackPanel>
+                    <Label Content="Сортировка:"/>
+                    <ComboBox x:Name="CBSorting" VerticalAlignment="Center" ItemsSource="{Binding SortingTitles}" SelectedIndex="0"/>
+                </StackPanel>
+            </Border>
+            
+            <Border Margin="5">
+                <StackPanel>
+                    <Label Content="Фильтрация по ед. изм.:"/>
+                    <ComboBox x:Name="CBFiltering" VerticalAlignment="Center" ItemsSource="{Binding FilteringTitles}" SelectedIndex="0"/>
+                </StackPanel>
+            </Border>
+
+            <Border Margin="5">
+                <StackPanel>
+                    <Label Content="Число продуктов на странице:"/>
+                    <ComboBox x:Name="CBProductsNumberPerPage" VerticalAlignment="Center" ItemsSource="{Binding ItemsNumberPerPageTitles}" SelectedIndex="0"/>
+                </StackPanel>
+            </Border>
+            
+            <Border Margin="5">
+                <StackPanel>
+                    <Label Content="Добавленные в текущем месяце:" HorizontalAlignment="Center"/>
+                    <CheckBox x:Name="CBAddedInCurrentMonth" VerticalAlignment="Center" HorizontalAlignment="Center" IsChecked="False"/>
+                </StackPanel>
+            </Border>
+        </StackPanel>
+
+        <StackPanel Grid.Row="0" Grid.Column="1" Margin="5">
             <Label Content="Поиск:"/>
             <components:SearchBoxComponent x:Name="SearchBox" SearchPlaceHolder="Введите для поиска..."/>
         </StackPanel>
 
-        <Border Grid.Row="0" Grid.Column="1" Margin="5">
-            <StackPanel>
-                <Label Content="Сортировка:"/>
-                <ComboBox x:Name="CBSorting" VerticalAlignment="Center" ItemsSource="{Binding SortingTitles}" SelectedIndex="0"/>
-            </StackPanel>
-        </Border>
-
-        <Border Grid.Row="0" Grid.Column="2" Margin="5">
-            <StackPanel>
-                <Label Content="Фильтрация по ед. изм.:"/>
-                <ComboBox x:Name="CBFiltering" VerticalAlignment="Center" ItemsSource="{Binding FilteringTitles}" SelectedIndex="0"/>
-            </StackPanel>
-        </Border>
-
-        <Border Grid.Row="0" Grid.Column="3" Margin="5">
-            <StackPanel>
-                <Label Content="Добавленные в текущем месяце:" HorizontalAlignment="Center"/>
-                <CheckBox x:Name="CBAddedInCurrentMonth" VerticalAlignment="Center" HorizontalAlignment="Center" IsChecked="False"/>
-            </StackPanel>
-        </Border>
-
-        <Border Grid.Row="0" Grid.Column="4" Margin="5">
-            <StackPanel>
-                <Label Content="Число продуктов на странице:"/>
-                <ComboBox x:Name="CBProductsNumberPerPage" VerticalAlignment="Center" ItemsSource="{Binding ItemsNumberPerPageTitles}" SelectedIndex="0"/>
-            </StackPanel>
-        </Border>
-
-        <!--<ListBox x:Name="ProductList" Grid.Row="1" Grid.ColumnSpan="5" SelectionMode="Single"
-                 ItemsSource="{Binding DisplayedProducts}">
-
-        </ListBox>-->
-
-        <DataGrid x:Name="ProductList" Grid.Row="1" Grid.ColumnSpan="5"
+        <DataGrid x:Name="ProductList" Grid.Row="1" Grid.Column="1" Margin="5"
                   AutoGenerateColumns="False"
                   IsReadOnly="True"
                   SelectionMode="Single"
@@ -103,24 +97,22 @@
                 <DataGridTemplateColumn Header="Страны поставщики" Width="SizeToHeader">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <Expander Header="Страны поставщики">
-                                <ListBox ItemsSource="{Binding SupplierCountries}">
-                                    <ListBox.ItemTemplate>
-                                        <DataTemplate>
-                                            <Grid Margin="5">
-                                                <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="Auto"/>
-                                                    <ColumnDefinition Width="*"/>
-                                                </Grid.ColumnDefinitions>
-                                                <TextBlock Text="{Binding Title, StringFormat={}* {0}}" Grid.Column="0" Margin="0,0,5,0"/>
-                                                <Rectangle Fill="{Binding Brush}" Grid.Column="1"
-                                                       Width="{Binding Width, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Grid}}}"
-                                                       Height="{Binding Height, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Grid}}}"/>
-                                            </Grid>
-                                        </DataTemplate>
-                                    </ListBox.ItemTemplate>
-                                </ListBox>
-                            </Expander>
+                            <ListBox ItemsSource="{Binding SupplierCountries}"
+                                        SelectionMode="Single">
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <Grid Margin="5">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="Auto"/>
+                                                <ColumnDefinition Width="*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Border BorderBrush="{Binding Brush}" BorderThickness="5">
+                                                <TextBlock Text="{Binding Title}" Grid.Column="0"/>
+                                            </Border>
+                                        </Grid>
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
+                            </ListBox>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
@@ -139,12 +131,12 @@
             </DataGrid.RowStyle>
         </DataGrid>
 
-        <DockPanel Grid.Row="2" Grid.ColumnSpan="5" Margin="5">
+        <DockPanel Grid.Row="2" Grid.Column="1" Margin="5">
             <StackPanel Orientation="Horizontal" DockPanel.Dock="Right">
                 <Button x:Name="BtnGoToPreviousPage" Content="&#60;" FontSize="28" FontWeight="Bold" Margin="0,0,5,0" BorderThickness="0" Background="Transparent"/>
                 <TextBlock x:Name="TBShownServicesCount" FontSize="18" Margin="0,0,5,0" VerticalAlignment="Center">
                     <TextBlock.Text>
-                        <MultiBinding StringFormat="{}Показазно {0} услуг из {1}">
+                        <MultiBinding StringFormat="{}Показазно {0} продуктов из {1}">
                             <Binding Path="DisplayedProductsNumber"/>
                             <Binding Path="TotalProductsNumber"/>
                         </MultiBinding>
@@ -152,7 +144,7 @@
                 </TextBlock>
                 <Button x:Name="BtnGoToNextPage" Content="&#62;" FontSize="28" FontWeight="Bold" BorderThickness="0" Background="Transparent"/>
             </StackPanel>
-            
+
             <StackPanel Orientation="Horizontal" DockPanel.Dock="Left">
                 <Button x:Name="BtnAddProduct" Content="Добавить продукт" Margin="0,0,5,0" Click="BtnAddProduct_Click"/>
                 <Button x:Name="BtnEditProduct" Content="Редактировать продукт" Click="BtnEditProduct_Click"/>

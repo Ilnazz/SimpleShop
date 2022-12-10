@@ -1,0 +1,104 @@
+﻿<Page x:Class="SessionProject.Pages.OrderListPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:SessionProject.Pages"
+      mc:Ignorable="d"
+      Title="Список заказов"
+      Style="{StaticResource CommonStyle}"
+      DataContext="{Binding RelativeSource={RelativeSource Self}}">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <ListBox x:Name="OrderList"
+             Margin="5"
+             Grid.Row="0"
+             ItemsSource="{Binding Orders}" d:ItemsSource="{d:SampleData ItemCount=1}"
+             ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+             SelectionMode="Single">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Grid Margin="0,0,0,5">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock Grid.Row="0"
+                                   Grid.Column="0"
+                                   Margin="0,0,0,5"
+                                   FontWeight="Bold">
+                            <TextBlock.Text>
+                                <MultiBinding StringFormat="{}Заказ № {0} от {1}">
+                                    <Binding Path="ID"/>
+                                    <Binding Path="DateTime"/>
+                                </MultiBinding>
+                            </TextBlock.Text>
+                        </TextBlock>
+
+                        <TextBlock Grid.Row="0"
+                                   Grid.Column="1"
+                                   TextWrapping="Wrap"
+                                   HorizontalAlignment="Right"
+                                   Text="{Binding OrderStatus.Title, StringFormat={}Состояние заказа: {0}}"/>
+
+                        <StackPanel Grid.Row="1" Grid.Column="0">
+                            <TextBlock TextWrapping="Wrap"
+                                       Margin="0,0,5,0"
+                                       Text="{Binding UserCustomer.FullName, StringFormat={}Заказчик: {0}}"/>
+
+                            <TextBlock TextWrapping="Wrap"
+                                       Margin="0,0,5,0"
+                                       Text="{Binding UserExecutor.FullName, StringFormat={}Исполнитель: {0}}"/>
+                        </StackPanel>
+
+                        <StackPanel Grid.Row="1"
+                                    Grid.Column="1">
+                            <TextBlock Text="Состав заказа:"/>
+                            <ItemsControl ItemsSource="{Binding Order_Product}">
+                                <ItemsControl.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <WrapPanel IsItemsHost="True"/>
+                                    </ItemsPanelTemplate>
+                                </ItemsControl.ItemsPanel>
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <Border BorderBrush="Black"
+                                                BorderThickness="2.5"
+                                                Margin="0,0,5,0">
+                                            <StackPanel Margin="5">
+                                                <TextBlock Text="{Binding Product.Title}"/>
+                                                <TextBlock Text="{Binding Quantity, StringFormat={}Кол-во: {0}}"/>
+                                                <TextBlock Text="{Binding PurchasePrice, StringFormat={}Цена закупки: {0}}"/>
+                                            </StackPanel>
+                                        </Border>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </StackPanel>
+
+                        <TextBlock Grid.Row="2"
+                                   Grid.Column="1"
+                                   TextWrapping="Wrap">
+                            <TextBlock.Text>
+                                <MultiBinding StringFormat="{}Всего продуктов - {0}, итоговая стоимость - {1:f} руб.">
+                                    <Binding Path="TotalProductsNumber"/>
+                                    <Binding Path="TotalCost"/>
+                                </MultiBinding>
+                            </TextBlock.Text>
+                        </TextBlock>
+                    </Grid>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+    </Grid>
+</Page>

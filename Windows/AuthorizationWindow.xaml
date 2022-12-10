@@ -11,7 +11,9 @@
         Style="{StaticResource CommonStyle}"
         DataContext="{Binding RelativeSource={RelativeSource Self}}">
     <StackPanel HorizontalAlignment="Center" Margin="5">
-        <TextBlock Text="Авторизация пользователя" Margin="0,0,0,5"/>
+        <Image Height="50"
+               HorizontalAlignment="Center"
+               Source="{StaticResource Logotype}"/>
 
         <Label Target="{Binding ElementName=TBLogin}" Content="Логин:" Margin="0,0,0,5"/>
         <TextBox x:Name="TBLogin" Margin="0,0,0,5" MaxLength="50"/>

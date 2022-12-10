@@ -24,10 +24,10 @@ namespace SessionProject.Components
         public int ID { get; set; }
         public System.DateTime DateTime { get; set; }
         public int UserCustomerID { get; set; }
-        public int UserExecutorID { get; set; }
+        public Nullable<int> UserExecutorID { get; set; }
         public int OrderStatusID { get; set; }
     
-        public virtual OrderStatu OrderStatu { get; set; }
+        public virtual OrderStatus OrderStatus { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Order_Product> Order_Product { get; set; }
         public virtual User User { get; set; }

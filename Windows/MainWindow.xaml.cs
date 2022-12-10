@@ -25,6 +25,24 @@ namespace SessionProject.Windows
         public MainWindow()
         {
             InitializeComponent();
+
+            TBCurrentUserFullName.Text = App.CurrentUser.FullName;
+        }
+
+        private void ButtonLogOut_Click(object sender, RoutedEventArgs e)
+        {
+            var result = MessageBox.Show("Выйти из системы? Несохранённые изменения будут потеряны", "Предупреждение",
+                MessageBoxButton.YesNo, MessageBoxImage.Warning);
+            if (result == MessageBoxResult.No)
+                return;
+            
+            App.CurrentUser = null;
+
+            var authorizationWindow = new AuthorizationWindow();
+            authorizationWindow.Show();
+            authorizationWindow.Activate();
+
+            Close();
         }
     }
 }

@@ -18,10 +18,9 @@
                             <ColumnDefinition Width="Auto"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <TextBlock Text="{Binding Title, StringFormat={}* {0}}" Grid.Column="0" Margin="0,0,5,0"/>
-                        <Rectangle Fill="{Binding Brush}" Grid.Column="1"
-                                   Width="{Binding Width, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Grid}}}"
-                                   Height="{Binding Height, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Grid}}}"/>
+                        <Border BorderBrush="{Binding Brush}" BorderThickness="5">
+                            <TextBlock Text="{Binding Title, StringFormat={}* {0}}" Grid.Column="0" Margin="0,0,5,0"/>
+                        </Border>
                     </Grid>
                 </DataTemplate>
             </ComboBox.ItemTemplate>

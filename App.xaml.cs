@@ -22,8 +22,12 @@ namespace SessionProject
 
         static App()
         {
+            DB.Users.Load();
+            DB.MeasureUnits.Load();
             DB.SupplierCountries.Load();
             DB.Products.Load();
+            DB.Orders.Load();
+            DB.Order_Product.Load();
         }
     }
 }
