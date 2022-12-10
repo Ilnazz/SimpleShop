@@ -41,7 +41,7 @@ namespace SessionProject.Windows
                 return;
             }
 
-            if (IsPasswordValid(TBLogin.Text) == false)
+            if (IsPasswordValid(PBPassword.Password) == false)
             {
                 MessageBox.Show("Пароль должен содержать как минимум: " +
                     "6 символов, " +
@@ -50,7 +50,7 @@ namespace SessionProject.Windows
                     "1 символ из набора - !@#$%^");
                 return;
             }
-
+ 
             var isThisPhoneNumberExists = App.DB.Users.Any(user => user.PhoneNumber == TBPhoneNumber.Text);
             if (isThisPhoneNumberExists == true)
             {
