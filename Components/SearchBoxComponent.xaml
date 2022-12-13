@@ -7,6 +7,6 @@
              mc:Ignorable="d" DataContext="{Binding RelativeSource={RelativeSource Self}}" Loaded="OnLoaded">
     <Border BorderThickness="0.5">
         <TextBox x:Name="TBSearch" Text="{Binding Path=SearchText, UpdateSourceTrigger=PropertyChanged}" VerticalContentAlignment="Center"
-                 GotFocus="TBSearch_GotFocus" LostFocus="TBSearch_LostFocus"/>
+                 GotFocus="TBSearch_GotFocus" LostFocus="TBSearch_LostFocus" Padding="0,0,0,4"/>
     </Border>
 </UserControl>

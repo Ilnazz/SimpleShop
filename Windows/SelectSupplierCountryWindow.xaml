@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:SessionProject.Windows"
         mc:Ignorable="d" Style="{StaticResource CommonStyle}"
         Title="Выбор страны поставщика"
-        WindowStartupLocation="CenterOwner"
+        WindowStartupLocation="CenterScreen"
         SizeToContent="WidthAndHeight">
     <StackPanel Margin="5">
         <Label Content="Выберите страну поставщика"/>

@@ -94,7 +94,6 @@
 
                         <TextBlock Grid.Row="0"
                                    Grid.Column="2"
-                                   TextWrapping="Wrap"
                                    HorizontalAlignment="Right"
                                    Text="{Binding OrderStatus.Title, StringFormat={}Состояние заказа: {0}}"/>
                     </Grid>

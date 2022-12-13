@@ -7,7 +7,8 @@
         mc:Ignorable="d" d:Background="White"
         Title="Авторизация"
         WindowStartupLocation="CenterScreen"
-        SizeToContent="WidthAndHeight"
+        SizeToContent="Height"
+        Width="275"
         Style="{StaticResource CommonStyle}"
         DataContext="{Binding RelativeSource={RelativeSource Self}}">
     <StackPanel HorizontalAlignment="Center" Margin="5">

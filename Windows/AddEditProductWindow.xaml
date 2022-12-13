@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:SessionProject.Windows"
         mc:Ignorable="d" d:Background="White"
         Title="Добавление/редактирование продукта"
-        WindowStartupLocation="CenterOwner"
+        WindowStartupLocation="CenterScreen"
         Width="750"
         SizeToContent="WidthAndHeight"
         Style="{StaticResource CommonStyle}"
