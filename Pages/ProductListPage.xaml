@@ -92,8 +92,6 @@
 
                 <DataGridTextColumn Header="Дата добавления" Binding="{Binding AdditionDateTime, StringFormat={}{0:d}}" Width="SizeToHeader"/>
 
-                <DataGridTextColumn Header="Единица измерения" Binding="{Binding MeasureUnit.Title}" Width="SizeToHeader"/>
-
                 <DataGridTemplateColumn Header="Страны поставщики" Width="SizeToHeader">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
@@ -101,15 +99,9 @@
                                         SelectionMode="Single">
                                 <ListBox.ItemTemplate>
                                     <DataTemplate>
-                                        <Grid Margin="5">
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="Auto"/>
-                                                <ColumnDefinition Width="*"/>
-                                            </Grid.ColumnDefinitions>
-                                            <Border BorderBrush="{Binding Brush}" BorderThickness="5">
-                                                <TextBlock Text="{Binding Title}" Grid.Column="0"/>
-                                            </Border>
-                                        </Grid>
+                                        <Border BorderBrush="{Binding Brush}" BorderThickness="5" CornerRadius="2.5" Padding="5">
+                                            <TextBlock Text="{Binding Title}"/>
+                                        </Border>
                                     </DataTemplate>
                                 </ListBox.ItemTemplate>
                             </ListBox>
@@ -117,7 +109,20 @@
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
 
-                <DataGridTextColumn Header="В наличии" Binding="{Binding Quantity}" Width="SizeToHeader"/>
+                <DataGridTemplateColumn Header="В наличии">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center">
+                                <TextBlock.Text>
+                                    <MultiBinding StringFormat="{}{0} {1}">
+                                        <Binding Path="Quantity"/>
+                                        <Binding Path="MeasureUnit.Title"/>
+                                    </MultiBinding>
+                                </TextBlock.Text>
+                            </TextBlock>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
             </DataGrid.Columns>
 
             <DataGrid.RowStyle>
@@ -130,6 +135,88 @@
                 </Style>
             </DataGrid.RowStyle>
         </DataGrid>
+
+        <!--<ListBox x:Name="ProductList" Grid.Row="1" Grid.Column="1" Margin="5"
+                  SelectionMode="Single"
+                  ItemsSource="{Binding DisplayedProducts}"
+                  d:ItemsSource="{d:SampleData ItemCount=1}"
+                  ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Border Margin="5,0,5,5" BorderBrush="White" BorderThickness="2.5">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+
+                            <TextBlock Text="Id" Grid.Row="0" Grid.Column="0"/>
+                            <TextBlock Text="Фотография" Grid.Row="0" Grid.Column="1"/>
+                            <TextBlock Text="Наименование" Grid.Row="0" Grid.Column="2"/>
+                            <TextBlock Text="Стоимость" Grid.Row="0" Grid.Column="3"/>
+                            <TextBlock Text="Описание" Grid.Row="0" Grid.Column="4"/>
+                            <TextBlock Text="Дата добавления" Grid.Row="0" Grid.Column="5"/>
+                            <TextBlock Text="Страны поставщики" Grid.Row="0" Grid.Column="6"/>
+                            <TextBlock Text="В наличии" Grid.Row="0" Grid.Column="7"/>
+
+                            <TextBlock Text="{Binding ID}" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+
+                            <Border Grid.Row="1" Grid.Column="1" Margin="5" BorderBrush="White" BorderThickness="2.5" CornerRadius="2.5">
+                                <Image Width="100" VerticalAlignment="Center" HorizontalAlignment="Center"
+                                           Source="{Binding Photo, TargetNullValue={StaticResource NoPhoto}}"/>
+                            </Border>
+
+                            <TextBlock Text="{Binding Title}" Grid.Row="1" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+
+                            <TextBlock Text="{Binding Cost, StringFormat={}{0} руб.}" Grid.Row="1" Grid.Column="3" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+
+                            <TextBlock Text="{Binding Description, Converter={StaticResource ProductTextConverter}}" TextWrapping="Wrap"
+                                       Grid.Row="1" Grid.Column="4" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+
+                            <TextBlock Text="{Binding AdditionDateTime, StringFormat=d}" Grid.Row="1" Grid.Column="5" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+
+                            <ItemsControl ItemsSource="{Binding SupplierCountries}" Grid.Row="1" Grid.Column="6" Margin="5">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <Border BorderBrush="{Binding Brush}" BorderThickness="5" CornerRadius="2.5">
+                                            <TextBlock Text="{Binding Title}" Grid.Column="0"/>
+                                        </Border>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+
+                            <TextBlock Grid.Row="1" Grid.Column="7" VerticalAlignment="Center" HorizontalAlignment="Center">
+                                <TextBlock.Text>
+                                    <MultiBinding StringFormat="{}{0} {1}">
+                                        <Binding Path="Quantity"/>
+                                        <Binding Path="MeasureUnit.Title"/>
+                                    </MultiBinding>
+                                </TextBlock.Text>
+                            </TextBlock>
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+            <ListBox.ItemContainerStyle>
+                <Style>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding IsOutOfStock}" Value="True">
+                            <Setter Property="Control.Background" Value="Gainsboro"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </ListBox.ItemContainerStyle>
+        </ListBox>-->
 
         <DockPanel Grid.Row="2" Grid.Column="1" Margin="5">
             <StackPanel Orientation="Horizontal" DockPanel.Dock="Right">
