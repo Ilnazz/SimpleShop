@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -38,6 +39,16 @@ namespace SessionProject.Pages
         {
             InitializeComponent();
 
+            App.DB.Orders.Load();
+            Orders = App.DB.Orders.Local;
+        }
+
+        private void BtnMakeOrder_Click(object sender, RoutedEventArgs e)
+        {
+            var makeOrderWindow = new MakeOrderWindow();
+            makeOrderWindow.ShowDialog();
+
+            App.DB.Orders.Load();
             Orders = App.DB.Orders.Local;
         }
     }

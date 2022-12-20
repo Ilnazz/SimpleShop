@@ -15,5 +15,11 @@
         <BitmapImage x:Key="NoPhoto" UriSource="/Resources/no-photo.png"/>
 
         <converters:ProductTextConverter x:Key="ProductTextConverter"/>
+
+        <Style TargetType="Button">
+            <Setter Property="Background" Value="LightBlue"/>
+            <Setter Property="Padding" Value="5"/>
+        </Style>
+
     </Application.Resources>
 </Application>

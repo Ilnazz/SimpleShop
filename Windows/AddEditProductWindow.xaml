@@ -7,112 +7,101 @@
         mc:Ignorable="d" d:Background="White"
         Title="Добавление/редактирование продукта"
         WindowStartupLocation="CenterScreen"
-        Width="750"
-        SizeToContent="WidthAndHeight"
+        MaxWidth="600"
+        SizeToContent="Height"
         Style="{StaticResource CommonStyle}"
         Name="Root">
     <ScrollViewer VerticalScrollBarVisibility="Auto">
-        <StackPanel Margin="5">
-            <Grid Margin="0,0,0,5">
+        <StackPanel Margin="10">
+            <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
 
-                <StackPanel Grid.Column="0" Margin="0,0,5,0">
-                    <StackPanel Margin="0,0,0,5">
-                        <Label Content="Идентификатор:"/>
-                        <TextBlock x:Name="TBIdentificator" TextWrapping="Wrap"/>
-                    </StackPanel>
+                <StackPanel Grid.Column="0" Margin="0,0,10,0">
+                    <TextBlock x:Name="TBIdentificator" TextWrapping="Wrap" Margin="0,0,0,5"/>
 
-                    <StackPanel Margin="0,0,0,5">
-                        <Label Content="Дата и время добавления:"/>
-                        <TextBlock x:Name="TBAdditionDateTime"/>
-                    </StackPanel>
+                    <TextBlock x:Name="TBAdditionDateTime" Margin="0,0,0,5"/>
 
-                    <StackPanel Margin="0,0,0,5">
-                        <Label Content="Наименование:"/>
-                        <TextBox x:Name="TBTitle" TextWrapping="Wrap" MaxLength="150"/>
-                    </StackPanel>
+                    <GroupBox Header="Название" Padding="5">
+                        <TextBox x:Name="TBTitle" TextWrapping="Wrap" MaxLength="150" Margin="0,0,0,5"/>
+                    </GroupBox>
 
-                    <StackPanel>
-                        <Label Content="Стоимость, руб.:"/>
+                    <GroupBox Header="Стоимость, руб." Padding="5">
                         <TextBox x:Name="TBCost"/>
-                    </StackPanel>
+                    </GroupBox>
 
-                    <StackPanel>
-                        <Label Content="Описание:"/>
+                    <GroupBox Header="Описание" Padding="5">
                         <TextBox x:Name="TBDescription"
                                  AcceptsReturn="True" TextWrapping="Wrap"/>
-                    </StackPanel>
+                    </GroupBox>
+
+                    <GroupBox Header="Единица измерения" Padding="5" Grid.Column="0" Margin="0,0,5,0" VerticalAlignment="Top">
+                        <WrapPanel x:Name="MeasureUnitRadioButtons"/>
+                    </GroupBox>
+
+                    <GroupBox Grid.Column="1" Header="Страны поставщики">
+                        <StackPanel Grid.Column="1">
+                            <ListBox x:Name="SupplierCountryList"
+                             Margin="0,0,0,10"
+                             ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                             ItemsSource="{Binding SupplierCountries, ElementName=Root}">
+                                <ListBox.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <WrapPanel IsItemsHost="True" />
+                                    </ItemsPanelTemplate>
+                                </ListBox.ItemsPanel>
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <Grid Margin="5">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="Auto"/>
+                                                <ColumnDefinition Width="*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Border BorderBrush="{Binding Brush}" BorderThickness="5">
+                                                <TextBlock Text="{Binding Title}" Grid.Column="0" Margin="5"/>
+                                            </Border>
+                                        </Grid>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ListBox>
+
+                            <TextBlock x:Name="TBThereAreNoSuppliers" Text="Поставщики не указаны" Margin="0,0,0,5" Visibility="Collapsed"/>
+
+                            <StackPanel Orientation="Horizontal" Margin="0,0,0,5">
+                                <Button x:Name="BtnAddSupplierCountry"
+                                    Content="Добавить"
+                                    Margin="0,0,10,0"
+                                    Click="BtnAddSupplierCountry_Click"/>
+
+                                <Button x:Name="BtnRemoveSupplierCountry"
+                                    Content="Удалить"
+                                    Click="BtnRemoveSupplierCountry_Click"/>
+                            </StackPanel>
+                        </StackPanel>
+                    </GroupBox>
                 </StackPanel>
 
                 <StackPanel Grid.Column="1">
                     <GroupBox Header="Фотография" HorizontalAlignment="Center">
                         <StackPanel>
-                            <Image x:Name="ImgPhoto" Margin="5" Width="250"
+                            <Image x:Name="ImgPhoto" Margin="5" Height="300" Width="300"
                                Source="{Binding Photo, ElementName=Root, TargetNullValue={StaticResource AddPhoto}}"/>
                             <Button x:Name="BtnAddReplacePhoto" Content="Заменить фотографию" Click="BtnAddReplacePhoto_Click"/>
                         </StackPanel>
                     </GroupBox>
                 </StackPanel>
+
+
+                <Button x:Name="BtnSave" Content="Сохранить" Grid.Row="1" Grid.Column="1" Margin="0,10,0,0"
+                    HorizontalAlignment="Right"
+                    Click="BtnSave_Click"/>
             </Grid>
-
-            <Grid Margin="0,0,0,5" >
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-
-                <GroupBox Header="Единица измерения" Padding="5" Grid.Column="0" Margin="0,0,5,0">
-                    <WrapPanel x:Name="MeasureUnitRadioButtons"/>
-                </GroupBox>
-
-                <StackPanel Grid.Column="1">
-                    <Label Target="{Binding ElementName=SupplierCountryList}" Content="Страны поставщики:"/>
-                    <ListBox x:Name="SupplierCountryList"
-                             Margin="0,0,0,5"
-                             SelectionMode="Single"
-                             ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-                             ItemsSource="{Binding SupplierCountries, ElementName=Root}">
-                        <ListBox.ItemsPanel>
-                            <ItemsPanelTemplate>
-                                <WrapPanel IsItemsHost="True" />
-                            </ItemsPanelTemplate>
-                        </ListBox.ItemsPanel>
-                        <ListBox.ItemTemplate>
-                            <DataTemplate>
-                                <Grid Margin="5">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="Auto"/>
-                                        <ColumnDefinition Width="*"/>
-                                    </Grid.ColumnDefinitions>
-                                    <Border BorderBrush="{Binding Brush}" BorderThickness="5">
-                                        <TextBlock Text="{Binding Title}" Grid.Column="0" Margin="5"/>
-                                    </Border>
-                                </Grid>
-                            </DataTemplate>
-                        </ListBox.ItemTemplate>
-                    </ListBox>
-
-                    <TextBlock x:Name="TBThereAreNoSuppliers" Text="Поставщики не указаны" Margin="0,0,0,5" Visibility="Collapsed"/>
-
-                    <StackPanel Orientation="Horizontal" Margin="0,0,0,5">
-                        <Button x:Name="BtnAddSupplierCountry"
-                        Content="Добавить"
-                        Margin="0,0,5,0"
-                        Click="BtnAddSupplierCountry_Click"/>
-
-                        <Button x:Name="BtnRemoveSupplierCountry"
-                        Content="Удалить"
-                        Click="BtnRemoveSupplierCountry_Click"/>
-                    </StackPanel>
-                </StackPanel>
-            </Grid>
-            
-            <Button x:Name="BtnSave" Content="Сохранить"
-                HorizontalAlignment="Left"
-                Click="BtnSave_Click"/>
         </StackPanel>
     </ScrollViewer>
 </Window>

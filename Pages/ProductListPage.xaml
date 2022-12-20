@@ -55,11 +55,16 @@
             <components:SearchBoxComponent x:Name="SearchBox" SearchPlaceHolder="Введите для поиска..."/>
         </StackPanel>
 
-        <DataGrid x:Name="ProductList" Grid.Row="1" Grid.Column="1" Margin="5"
+        <DataGrid x:Name="ProductList" Grid.Row="1" Grid.Column="1" Margin="10"
                   AutoGenerateColumns="False"
                   IsReadOnly="True"
                   SelectionMode="Single"
-                  ItemsSource="{Binding DisplayedProducts}">
+                  ItemsSource="{Binding DisplayedProducts}"
+                  GridLinesVisibility="Horizontal"
+                  HorizontalGridLinesBrush="Gray"
+                  BorderThickness="0"
+                  Background="Transparent"
+                  SelectionUnit="FullRow">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="ID" Binding="{Binding ID}" Width="SizeToHeader"/>
 
@@ -90,21 +95,20 @@
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
 
-                <DataGridTextColumn Header="Дата добавления" Binding="{Binding AdditionDateTime, StringFormat={}{0:d}}" Width="SizeToHeader"/>
+                <DataGridTextColumn Header="Дата добавления" Binding="{Binding AdditionDateTime, StringFormat={}{0:dd.MM.yyyy}}" Width="SizeToHeader"/>
 
                 <DataGridTemplateColumn Header="Страны поставщики" Width="SizeToHeader">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <ListBox ItemsSource="{Binding SupplierCountries}"
-                                        SelectionMode="Single">
-                                <ListBox.ItemTemplate>
+                            <ItemsControl ItemsSource="{Binding SupplierCountries}">
+                                <ItemsControl.ItemTemplate>
                                     <DataTemplate>
-                                        <Border BorderBrush="{Binding Brush}" BorderThickness="5" CornerRadius="2.5" Padding="5">
+                                        <Border BorderBrush="{Binding Brush}" BorderThickness="5" CornerRadius="2.5" Padding="5" Margin="2.5,2.5,2.5,5">
                                             <TextBlock Text="{Binding Title}"/>
                                         </Border>
                                     </DataTemplate>
-                                </ListBox.ItemTemplate>
-                            </ListBox>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
@@ -136,106 +140,26 @@
             </DataGrid.RowStyle>
         </DataGrid>
 
-        <!--<ListBox x:Name="ProductList" Grid.Row="1" Grid.Column="1" Margin="5"
-                  SelectionMode="Single"
-                  ItemsSource="{Binding DisplayedProducts}"
-                  d:ItemsSource="{d:SampleData ItemCount=1}"
-                  ScrollViewer.HorizontalScrollBarVisibility="Disabled">
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <Border Margin="5,0,5,5" BorderBrush="White" BorderThickness="2.5">
-                        <Grid>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
-                            </Grid.RowDefinitions>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto"/>
-                                <ColumnDefinition Width="Auto"/>
-                                <ColumnDefinition Width="Auto"/>
-                                <ColumnDefinition Width="Auto"/>
-                                <ColumnDefinition Width="Auto"/>
-                                <ColumnDefinition Width="Auto"/>
-                                <ColumnDefinition Width="Auto"/>
-                                <ColumnDefinition Width="Auto"/>
-                            </Grid.ColumnDefinitions>
+        <Border BorderBrush="LightBlue" BorderThickness="0,2.5,0,0" Grid.Row="2" Grid.Column="1" Margin="5">
+            <DockPanel>
+                <StackPanel Orientation="Horizontal" DockPanel.Dock="Right">
+                    <Button x:Name="BtnGoToPreviousPage" Content="&#60;" FontSize="28" FontWeight="Bold" Margin="0,0,5,0" BorderThickness="0" Background="Transparent"/>
+                    <TextBlock x:Name="TBShownServicesCount" FontSize="18" Margin="0,0,5,0" VerticalAlignment="Center">
+                        <TextBlock.Text>
+                            <MultiBinding StringFormat="{}Показазно {0} продуктов из {1}">
+                                <Binding Path="DisplayedProductsNumber"/>
+                                <Binding Path="TotalProductsNumber"/>
+                            </MultiBinding>
+                        </TextBlock.Text>
+                    </TextBlock>
+                    <Button x:Name="BtnGoToNextPage" Content="&#62;" FontSize="28" FontWeight="Bold" BorderThickness="0" Background="Transparent"/>
+                </StackPanel>
 
-                            <TextBlock Text="Id" Grid.Row="0" Grid.Column="0"/>
-                            <TextBlock Text="Фотография" Grid.Row="0" Grid.Column="1"/>
-                            <TextBlock Text="Наименование" Grid.Row="0" Grid.Column="2"/>
-                            <TextBlock Text="Стоимость" Grid.Row="0" Grid.Column="3"/>
-                            <TextBlock Text="Описание" Grid.Row="0" Grid.Column="4"/>
-                            <TextBlock Text="Дата добавления" Grid.Row="0" Grid.Column="5"/>
-                            <TextBlock Text="Страны поставщики" Grid.Row="0" Grid.Column="6"/>
-                            <TextBlock Text="В наличии" Grid.Row="0" Grid.Column="7"/>
-
-                            <TextBlock Text="{Binding ID}" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-
-                            <Border Grid.Row="1" Grid.Column="1" Margin="5" BorderBrush="White" BorderThickness="2.5" CornerRadius="2.5">
-                                <Image Width="100" VerticalAlignment="Center" HorizontalAlignment="Center"
-                                           Source="{Binding Photo, TargetNullValue={StaticResource NoPhoto}}"/>
-                            </Border>
-
-                            <TextBlock Text="{Binding Title}" Grid.Row="1" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-
-                            <TextBlock Text="{Binding Cost, StringFormat={}{0} руб.}" Grid.Row="1" Grid.Column="3" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-
-                            <TextBlock Text="{Binding Description, Converter={StaticResource ProductTextConverter}}" TextWrapping="Wrap"
-                                       Grid.Row="1" Grid.Column="4" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-
-                            <TextBlock Text="{Binding AdditionDateTime, StringFormat=d}" Grid.Row="1" Grid.Column="5" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-
-                            <ItemsControl ItemsSource="{Binding SupplierCountries}" Grid.Row="1" Grid.Column="6" Margin="5">
-                                <ItemsControl.ItemTemplate>
-                                    <DataTemplate>
-                                        <Border BorderBrush="{Binding Brush}" BorderThickness="5" CornerRadius="2.5">
-                                            <TextBlock Text="{Binding Title}" Grid.Column="0"/>
-                                        </Border>
-                                    </DataTemplate>
-                                </ItemsControl.ItemTemplate>
-                            </ItemsControl>
-
-                            <TextBlock Grid.Row="1" Grid.Column="7" VerticalAlignment="Center" HorizontalAlignment="Center">
-                                <TextBlock.Text>
-                                    <MultiBinding StringFormat="{}{0} {1}">
-                                        <Binding Path="Quantity"/>
-                                        <Binding Path="MeasureUnit.Title"/>
-                                    </MultiBinding>
-                                </TextBlock.Text>
-                            </TextBlock>
-                        </Grid>
-                    </Border>
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-            <ListBox.ItemContainerStyle>
-                <Style>
-                    <Style.Triggers>
-                        <DataTrigger Binding="{Binding IsOutOfStock}" Value="True">
-                            <Setter Property="Control.Background" Value="Gainsboro"/>
-                        </DataTrigger>
-                    </Style.Triggers>
-                </Style>
-            </ListBox.ItemContainerStyle>
-        </ListBox>-->
-
-        <DockPanel Grid.Row="2" Grid.Column="1" Margin="5">
-            <StackPanel Orientation="Horizontal" DockPanel.Dock="Right">
-                <Button x:Name="BtnGoToPreviousPage" Content="&#60;" FontSize="28" FontWeight="Bold" Margin="0,0,5,0" BorderThickness="0" Background="Transparent"/>
-                <TextBlock x:Name="TBShownServicesCount" FontSize="18" Margin="0,0,5,0" VerticalAlignment="Center">
-                    <TextBlock.Text>
-                        <MultiBinding StringFormat="{}Показазно {0} продуктов из {1}">
-                            <Binding Path="DisplayedProductsNumber"/>
-                            <Binding Path="TotalProductsNumber"/>
-                        </MultiBinding>
-                    </TextBlock.Text>
-                </TextBlock>
-                <Button x:Name="BtnGoToNextPage" Content="&#62;" FontSize="28" FontWeight="Bold" BorderThickness="0" Background="Transparent"/>
-            </StackPanel>
-
-            <StackPanel Orientation="Horizontal" DockPanel.Dock="Left">
-                <Button x:Name="BtnAddProduct" Content="Добавить продукт" Margin="0,0,5,0" Click="BtnAddProduct_Click"/>
-                <Button x:Name="BtnEditProduct" Content="Редактировать продукт" Click="BtnEditProduct_Click"/>
-            </StackPanel>
-        </DockPanel>
+                <StackPanel Orientation="Horizontal" DockPanel.Dock="Left" x:Name="Buttons">
+                    <Button x:Name="BtnAddProduct" Content="Добавить продукт" Margin="0,0,5,0" Click="BtnAddProduct_Click" VerticalAlignment="Center"/>
+                    <Button x:Name="BtnEditProduct" Content="Редактировать продукт" Click="BtnEditProduct_Click" VerticalAlignment="Center"/>
+                </StackPanel>
+            </DockPanel>
+        </Border>
     </Grid>
 </Page>

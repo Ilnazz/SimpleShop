@@ -112,6 +112,9 @@
     <Compile Include="Windows\AddEditProductWindow.xaml.cs">
       <DependentUpon>AddEditProductWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Windows\MakeOrderWindow.xaml.cs">
+      <DependentUpon>MakeOrderWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Windows\SelectSupplierCountryWindow.xaml.cs">
       <DependentUpon>SelectSupplierCountryWindow.xaml</DependentUpon>
     </Compile>
@@ -131,6 +134,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Windows\AuthorizationWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\MakeOrderWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

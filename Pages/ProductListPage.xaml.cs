@@ -207,6 +207,11 @@ namespace SessionProject.Pages
         {
             InitializeComponent();
 
+            if (App.CurrentUser.RoleID == 4)
+            {
+                Buttons.Visibility = Visibility.Collapsed;
+            }
+
             SearchBox.TextChanged += Refresh;
             CBSorting.SelectionChanged += (s, e) => Refresh();
             CBFiltering.SelectionChanged += (s, e) => Refresh();

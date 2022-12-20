@@ -12,8 +12,8 @@ namespace SessionProject.Components
 
         public decimal TotalCost { get => Order_Product.Sum(op => op.Quantity * op.PurchasePrice); }
 
-        public User UserCustomer { get => App.DB.Users.First(u => u.ID == UserCustomerID); }
+        public User UserCustomer { get => App.DB.Users.FirstOrDefault(u => u.ID == UserCustomerID); }
 
-        public User UserExecutor { get => App.DB.Users.First(u => u.ID == UserExecutorID); }
+        public User UserExecutor { get => App.DB.Users.FirstOrDefault(u => u.ID == UserExecutorID); }
     }
 }

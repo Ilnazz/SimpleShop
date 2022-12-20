@@ -4,8 +4,9 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SessionProject"
-        mc:Ignorable="d" WindowState="Maximized" WindowStyle="ThreeDBorderWindow"
+        mc:Ignorable="d"
         Title="Проект по сессии"
+        Width="1280" Height="720"
         Style="{StaticResource CommonStyle}">
     <Grid>
         <Grid.RowDefinitions>
@@ -19,16 +20,16 @@
                 <TextBlock Text="Проект" VerticalAlignment="Center" FontSize="14"/>
             </StackPanel>
             <StackPanel DockPanel.Dock="Right" HorizontalAlignment="Right" Orientation="Horizontal">
-                <TextBlock x:Name="TBCurrentUserFullName" Margin="0,0,5,0" VerticalAlignment="Center"/>
-                <Button x:Name="ButtonLogOut" Content="Выйти" Click="ButtonLogOut_Click" VerticalAlignment="Center"/>
+                <TextBlock x:Name="TBCurrentUserFullName" Margin="0,15,5,0" VerticalAlignment="Center"/>
+                <Button x:Name="ButtonLogOut" Content="Выйти" Click="ButtonLogOut_Click" Margin="0,15,0,0" VerticalAlignment="Center"/>
             </StackPanel>
         </DockPanel>
 
         <TabControl Grid.Row="1">
-            <TabItem Header="Список продуктов">
+            <TabItem Header="Список продуктов" x:Name="TIProdList">
                 <Frame NavigationUIVisibility="Hidden" Source="../Pages/ProductListPage.xaml"/>
             </TabItem>
-            <TabItem Header="Список заказов">
+            <TabItem Header="Список заказов" x:Name="TIOrderList">
                 <Frame NavigationUIVisibility="Hidden" Source="../Pages/OrderListPage.xaml"/>
             </TabItem>
         </TabControl>

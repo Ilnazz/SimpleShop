@@ -27,6 +27,21 @@ namespace SessionProject.Windows
             InitializeComponent();
 
             TBCurrentUserFullName.Text = App.CurrentUser.FullName;
+
+            switch (App.CurrentUser.ID)
+            {
+                case 1: // admin
+                    break;
+                case 2: // manager
+                    TIOrderList.Visibility = Visibility.Collapsed;
+                    break;
+                case 3: // storekeeper
+                    TIProdList.Visibility = Visibility.Collapsed;
+                    break;
+                case 4: // customer - not realized
+                    break;
+            }
+
         }
 
         private void ButtonLogOut_Click(object sender, RoutedEventArgs e)

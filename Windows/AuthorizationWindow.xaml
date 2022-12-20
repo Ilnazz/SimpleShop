@@ -22,7 +22,7 @@
         <PasswordBox x:Name="PBPassword" Margin="0,0,0,5" MaxLength="50"/>
 
         <StackPanel Orientation="Horizontal" Margin="0,0,0,5">
-            <CheckBox x:Name="CBRememberUser" VerticalAlignment="Center" IsChecked="False"/>
+            <CheckBox x:Name="CBRememberUser" VerticalAlignment="Center" IsChecked="True"/>
             <Label Target="{Binding ElementName=CBRememberUser}" Content="Запомнить меня"/>
         </StackPanel>
 

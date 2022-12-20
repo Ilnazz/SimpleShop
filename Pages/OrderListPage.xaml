@@ -8,97 +8,176 @@
       Title="Список заказов"
       Style="{StaticResource CommonStyle}"
       DataContext="{Binding RelativeSource={RelativeSource Self}}">
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="Auto"/>
-        </Grid.RowDefinitions>
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <Grid>
+            <Grid.Resources>
+                <CollectionViewSource
+                    x:Key="GroupedOrders"
+                    Source="{Binding Orders}">
+                    <CollectionViewSource.GroupDescriptions>
+                        <PropertyGroupDescription
+                            PropertyName="OrderStatus.Title"/>
+                    </CollectionViewSource.GroupDescriptions>
+                </CollectionViewSource>
+            </Grid.Resources>
 
-        <ListBox x:Name="OrderList"
-             Margin="5"
-             Grid.Row="0"
-             ItemsSource="{Binding Orders}" d:ItemsSource="{d:SampleData ItemCount=1}"
-             ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-             SelectionMode="Single">
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <Grid Margin="5,0,5,5">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                        </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="Auto"/>
-                        </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
 
-                        <TextBlock Grid.Row="0"
-                                   Grid.Column="0"
-                                   Margin="0,0,0,5"
-                                   FontWeight="Bold">
-                            <TextBlock.Text>
-                                <MultiBinding StringFormat="{}Заказ № {0} от {1}">
-                                    <Binding Path="ID"/>
-                                    <Binding Path="DateTime"/>
-                                </MultiBinding>
-                            </TextBlock.Text>
-                        </TextBlock>
+            <ItemsControl x:Name="OrderList"
+                 Margin="10"
+                 Grid.Row="0"
+                 ItemsSource="{Binding Source={StaticResource GroupedOrders}}" d:ItemsSource="{d:SampleData ItemCount=1}"
+                 ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Border BorderBrush="Gray" BorderThickness="1" Margin="25,10,0,0">
+                            <Grid Margin="10">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
 
-                        <StackPanel Grid.Row="1" Grid.Column="0">
-                            <TextBlock TextWrapping="Wrap"
-                                       Margin="0,0,5,0"
-                                       Text="{Binding UserCustomer.FullName, StringFormat={}Заказчик: {0}}"/>
+                                <TextBlock Grid.Row="0"
+                                           Grid.Column="0"
+                                           Margin="0,0,10,10"
+                                           FontWeight="Bold"
+                                           FontSize="16">
+                                    <TextBlock.Text>
+                                        <MultiBinding StringFormat="{}Заказ № {0} от {1:dd.MM.yyyy HH:mm}">
+                                            <Binding Path="ID"/>
+                                            <Binding Path="DateTime"/>
+                                        </MultiBinding>
+                                    </TextBlock.Text>
+                                </TextBlock>
 
-                            <TextBlock TextWrapping="Wrap"
-                                       Margin="0,0,5,0"
-                                       Text="{Binding UserExecutor.FullName, StringFormat={}Исполнитель: {0}}"/>
-                        </StackPanel>
+                                <TextBlock Text="Перечень товаров в заказе:" FontSize="16" Margin="0,0,0,5" Grid.Row="0" Grid.Column="1"/>
 
-                        <StackPanel Grid.Row="1"
-                                    Grid.Column="1">
-                            <TextBlock Text="Состав заказа:"/>
-                            <ItemsControl ItemsSource="{Binding Order_Product}">
-                                <ItemsControl.ItemsPanel>
-                                    <ItemsPanelTemplate>
-                                        <WrapPanel IsItemsHost="True"/>
-                                    </ItemsPanelTemplate>
-                                </ItemsControl.ItemsPanel>
-                                <ItemsControl.ItemTemplate>
-                                    <DataTemplate>
-                                        <Border BorderBrush="Black"
-                                                BorderThickness="2.5"
-                                                Margin="0,0,5,5">
-                                            <StackPanel Margin="5">
-                                                <TextBlock Text="{Binding Product.Title}"/>
-                                                <TextBlock Text="{Binding Quantity, StringFormat={}Кол-во: {0}}"/>
-                                                <TextBlock Text="{Binding PurchasePrice, StringFormat={}Цена закупки: {0}}"/>
-                                            </StackPanel>
-                                        </Border>
-                                    </DataTemplate>
-                                </ItemsControl.ItemTemplate>
-                            </ItemsControl>
-                        </StackPanel>
 
-                        <TextBlock Grid.Row="2"
-                                   Grid.Column="1"
-                                   TextWrapping="Wrap">
-                            <TextBlock.Text>
-                                <MultiBinding StringFormat="{}Всего продуктов - {0}, итоговая стоимость - {1:f} руб.">
-                                    <Binding Path="TotalProductsNumber"/>
-                                    <Binding Path="TotalCost"/>
-                                </MultiBinding>
-                            </TextBlock.Text>
-                        </TextBlock>
+                                <StackPanel Grid.Row="1"
+                                            Grid.RowSpan="2"
+                                            Grid.Column="1"
+                                            Grid.ColumnSpan="2">
+                                    <ItemsControl ItemsSource="{Binding Order_Product}">
+                                        <ItemsControl.ItemsPanel>
+                                            <ItemsPanelTemplate>
+                                                <WrapPanel IsItemsHost="True"/>
+                                            </ItemsPanelTemplate>
+                                        </ItemsControl.ItemsPanel>
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate>
+                                                <Border BorderBrush="Black"
+                                                        BorderThickness="1"
+                                                        CornerRadius="2.5"
+                                                        Margin="0,0,10,10">
+                                                    <StackPanel Margin="5">
+                                                        <TextBlock Text="{Binding Product.Title}"/>
+                                                        <TextBlock Text="{Binding Quantity, StringFormat={}Кол-во: {0}}"/>
+                                                        <TextBlock Text="{Binding PurchasePrice, StringFormat={}Цена закупки: {0}}"/>
+                                                    </StackPanel>
+                                                </Border>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
+                                </StackPanel>
 
-                        <TextBlock Grid.Row="0"
-                                   Grid.Column="2"
-                                   HorizontalAlignment="Right"
-                                   Text="{Binding OrderStatus.Title, StringFormat={}Состояние заказа: {0}}"/>
-                    </Grid>
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>
-    </Grid>
+                                <StackPanel Grid.Row="1" Margin="0,0,10,10"
+                                            Grid.Column="0">
+                                    <GroupBox Header="Общее количество продуктов, ед." Padding="5" Margin="0,0,0,10">
+                                        <TextBlock Text="{Binding TotalProductsNumber}" FontWeight="Bold" HorizontalAlignment="Center"/>
+                                    </GroupBox>
+                                    <GroupBox Header="Итоговая стоимость, руб." Padding="5">
+                                        <TextBlock Text="{Binding TotalCost, StringFormat=f}" FontWeight="Bold" HorizontalAlignment="Center"/>
+                                    </GroupBox>
+                                </StackPanel>
+
+                                <StackPanel Grid.Row="2" Grid.Column="0" Margin="0,0,10,0" VerticalAlignment="Bottom">
+                                    <TextBlock TextWrapping="Wrap"
+                                               Margin="0,0,5,0"
+                                               Text="{Binding UserCustomer.FullName, StringFormat={}Заказчик: {0}}"/>
+
+                                    <TextBlock TextWrapping="Wrap"
+                                               Margin="0,0,5,0"
+                                               Text="{Binding UserExecutor.FullName, StringFormat={}Исполнитель: {0}}"/>
+                                </StackPanel>
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+                
+                <ItemsControl.GroupStyle>
+                    <GroupStyle>
+                        <GroupStyle.ContainerStyle>
+                            <Style
+                                TargetType="GroupItem">
+                                <Setter
+                                    Property="Margin"
+                                    Value="0,10,0,0"/>
+                                <Setter
+                                    Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate
+                                            TargetType="GroupItem">
+                                            <Expander
+                                                IsExpanded="False">
+                                                <Expander.Header>
+                                                    <StackPanel
+                                                        Orientation="Horizontal">
+                                                        <TextBlock
+                                                            Text="Заказы со статусом"
+                                                            FontSize="16"
+                                                            FontWeight="Bold"
+                                                            VerticalAlignment="Center"
+                                                            Margin="0,0,10,0"/>
+                                                        <Border
+                                                            BorderBrush="Black"
+                                                            BorderThickness="1"
+                                                            CornerRadius="2.5"
+                                                            Padding="1.25"
+                                                            Margin="0,0,10,0"
+                                                            Background="LightBlue">
+                                                            <TextBlock
+                                                                Text="{Binding Name}"
+                                                                FontSize="16"/>
+                                                        </Border>
+                                                        <TextBlock
+                                                            Text="—"
+                                                            FontSize="16"
+                                                            VerticalAlignment="Center"
+                                                            Margin="0,0,10,0"/>
+
+                                                        <TextBlock
+                                                            Text="{Binding ItemCount}"
+                                                            FontSize="16"
+                                                            VerticalAlignment="Center"/>
+                                                    </StackPanel>
+                                                </Expander.Header>
+                                                <Expander.Content>
+                                                    <ItemsPresenter/>
+                                                </Expander.Content>
+                                            </Expander>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </GroupStyle.ContainerStyle>
+                    </GroupStyle>
+                </ItemsControl.GroupStyle>
+            </ItemsControl>
+
+            <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="10" HorizontalAlignment="Right">
+                <Button x:Name="BtnMakeOrder"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Bottom"
+                    Content="Оформить новый заказ" Click="BtnMakeOrder_Click"/>
+            </StackPanel>
+        </Grid>
+    </ScrollViewer>
 </Page>

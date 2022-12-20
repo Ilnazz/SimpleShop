@@ -28,6 +28,9 @@ namespace SessionProject
             DB.Products.Load();
             DB.Orders.Load();
             DB.Order_Product.Load();
+            DB.ProductsReceipts.Load();
+            DB.Roles.Load();
+            DB.Users.Load();
         }
     }
 }

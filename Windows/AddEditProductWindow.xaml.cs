@@ -119,7 +119,7 @@ namespace SessionProject.Windows
                 Photo = _editingProduct.Photo;
 
             // Текстовые поля
-            TBIdentificator.Text = _editingProduct.ID.ToString();
+            TBIdentificator.Text = $"Идентификатор: {_editingProduct.ID}";
             TBAdditionDateTime.Text = $"{_editingProduct.AdditionDateTime:dd.MM.yyyy HH:mm}";
             TBTitle.Text = _editingProduct.Title;
             TBCost.Text = $"{_editingProduct.Cost:f}";
