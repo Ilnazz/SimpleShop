@@ -1,24 +1,24 @@
-﻿<Application x:Class="SessionProject.App"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:SessionProject"
-             xmlns:converters="clr-namespace:SessionProject.Converters"
-             StartupUri="Windows/AuthorizationWindow.xaml">
+﻿<Application
+    x:Class="SessionProject.App"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:converters="clr-namespace:SessionProject.Converters"
+    StartupUri="Windows/AuthorizationWindow.xaml">
     <Application.Resources>
         <Style x:Key="CommonStyle">
-            <Setter Property="Control.FontFamily" Value="Comic Sans MS"/>
-            <Setter Property="Control.FontSize" Value="14"/>
+            <Setter Property="Control.FontFamily" Value="Book Antiqua" />
+            <Setter Property="Control.FontSize" Value="14" />
         </Style>
 
-        <BitmapImage x:Key="Logotype" UriSource="/Resources/logo.png"/>
-        <BitmapImage x:Key="AddPhoto" UriSource="/Resources/add-photo.png"/>
-        <BitmapImage x:Key="NoPhoto" UriSource="/Resources/no-photo.png"/>
+        <BitmapImage x:Key="Logotype" UriSource="/Resources/logo.png" />
+        <BitmapImage x:Key="AddPhoto" UriSource="/Resources/add-photo.png" />
+        <BitmapImage x:Key="NoPhoto" UriSource="/Resources/no-photo.png" />
 
-        <converters:ProductTextConverter x:Key="ProductTextConverter"/>
+        <converters:TextLengthConverter x:Key="ProductTextConverter" />
 
         <Style TargetType="Button">
-            <Setter Property="Background" Value="LightBlue"/>
-            <Setter Property="Padding" Value="5"/>
+            <Setter Property="Background" Value="Salmon" />
+            <Setter Property="Padding" Value="5" />
         </Style>
 
     </Application.Resources>

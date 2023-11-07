@@ -1,38 +1,76 @@
-﻿<Window x:Class="SessionProject.Windows.AuthorizationWindow"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:SessionProject"
-        mc:Ignorable="d" d:Background="White"
-        Title="Авторизация"
-        WindowStartupLocation="CenterScreen"
-        SizeToContent="Height"
-        Width="275"
-        Style="{StaticResource CommonStyle}"
-        DataContext="{Binding RelativeSource={RelativeSource Self}}">
-    <StackPanel HorizontalAlignment="Center" Margin="5">
-        <Image Height="50"
-               HorizontalAlignment="Center"
-               Source="{StaticResource Logotype}"/>
+﻿<Window
+    x:Class="SessionProject.Windows.AuthorizationWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:SessionProject"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="Авторизация"
+    Width="275"
+    d:Background="White"
+    DataContext="{Binding RelativeSource={RelativeSource Self}}"
+    SizeToContent="Height"
+    Style="{StaticResource CommonStyle}"
+    WindowStartupLocation="CenterScreen"
+    mc:Ignorable="d">
+    <StackPanel Margin="10" HorizontalAlignment="Stretch">
+        <Image
+            Height="50"
+            HorizontalAlignment="Center"
+            Source="{StaticResource Logotype}" />
 
-        <Label Target="{Binding ElementName=TBLogin}" Content="Логин:" Margin="0,0,0,5"/>
-        <TextBox x:Name="TBLogin" Margin="0,0,0,5" MaxLength="50"/>
-        <Label Target="{Binding ElementName=PBPassword}" Content="Пароль:" Margin="0,0,0,5"/>
-        <PasswordBox x:Name="PBPassword" Margin="0,0,0,5" MaxLength="50"/>
+        <Label
+            Margin="0,0,0,5"
+            Content="Логин:"
+            Target="{Binding ElementName=TBLogin}" />
+        <TextBox
+            x:Name="TBLogin"
+            Margin="0,0,0,5"
+            MaxLength="50" />
+        <Label
+            Margin="0,0,0,5"
+            Content="Пароль:"
+            Target="{Binding ElementName=PBPassword}" />
+        <PasswordBox
+            x:Name="PBPassword"
+            Margin="0,0,0,5"
+            MaxLength="50" />
 
-        <StackPanel Orientation="Horizontal" Margin="0,0,0,5">
-            <CheckBox x:Name="CBRememberUser" VerticalAlignment="Center" IsChecked="True"/>
-            <Label Target="{Binding ElementName=CBRememberUser}" Content="Запомнить меня"/>
+        <StackPanel
+            Margin="0,0,0,5"
+            Orientation="Horizontal"
+            Visibility="Collapsed">
+            <CheckBox
+                x:Name="CBRememberUser"
+                VerticalAlignment="Center"
+                IsChecked="True" />
+            <Label Content="Запомнить меня" Target="{Binding ElementName=CBRememberUser}" />
         </StackPanel>
 
-        <Button x:Name="ButtonAuthorize" Content="Войти" Click="ButtonAuthorize_Click" Margin="0,0,0,5"/>
-        <StackPanel x:Name="AuthorizationTimerBox" Visibility="Collapsed" Margin="0,0,0,5">
-            <TextBlock Text="{Binding AuthorizationTimerSeconds, StringFormat={}Можно войти через: {0} секунд}" FontSize="14" Foreground="Red"/>
+        <Button
+            x:Name="ButtonAuthorize"
+            Margin="0,0,0,5"
+            Click="ButtonAuthorize_Click"
+            Content="Войти" />
+        <StackPanel
+            x:Name="AuthorizationTimerBox"
+            Margin="0,0,0,5"
+            Visibility="Collapsed">
+            <TextBlock
+                FontSize="14"
+                Foreground="Red"
+                Text="{Binding AuthorizationTimerSeconds, StringFormat={}Можно войти через: {0} секунд}" />
         </StackPanel>
 
-        <TextBlock Text="Или" TextAlignment="Center" FontSize="12" Margin="0,0,0,5"/>
+        <TextBlock
+            Margin="0,0,0,5"
+            FontSize="12"
+            Text="Или"
+            TextAlignment="Center" />
 
-        <Button x:Name="ButtonRegister" Content="Зарегистрироваться" Click="ButtonRegister_Click"/>
+        <Button
+            x:Name="ButtonRegister"
+            Click="ButtonRegister_Click"
+            Content="Зарегистрироваться" />
     </StackPanel>
 </Window>

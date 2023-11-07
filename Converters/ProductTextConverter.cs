@@ -1,17 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Data;
 
 namespace SessionProject.Converters
 {
-    public class ProductTextConverter : IValueConverter
+    /// <summary>
+    /// Cuts given text to fit given length or to default length
+    /// </summary>
+    public class TextLengthConverter : IValueConverter
     {
         private const int _defaultTextLength = 255;
 
@@ -21,8 +17,9 @@ namespace SessionProject.Converters
                 return null;
 
             int textLength;
-            if (parameter != null && int.TryParse(parameter.ToString(), out var number) == true)
-                textLength = number;
+            if (parameter != null
+                && int.TryParse(parameter.ToString(), out var number) is true)
+                    textLength = number;
             else
                 textLength = _defaultTextLength;
 
@@ -34,7 +31,7 @@ namespace SessionProject.Converters
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return DependencyProperty.UnsetValue;
+            throw new NotImplementedException();
         }
     }
 }

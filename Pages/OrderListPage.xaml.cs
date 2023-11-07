@@ -33,7 +33,7 @@ namespace SessionProject.Pages
         public static readonly DependencyProperty OrdersProperty =
             DependencyProperty.Register("Orders", typeof(ObservableCollection<Order>), typeof(OrderListPage), new PropertyMetadata(null));
 
-
+        public IEnumerable<OrderStatus> OrderStatuses => App.DB.OrderStatus1.ToList();
 
         public OrderListPage()
         {
@@ -41,6 +41,9 @@ namespace SessionProject.Pages
 
             App.DB.Orders.Load();
             Orders = App.DB.Orders.Local;
+
+            if (App.CurrentUser.RoleID == 3)
+                BtnMakeOrder.Visibility = Visibility.Collapsed;
         }
 
         private void BtnMakeOrder_Click(object sender, RoutedEventArgs e)
@@ -48,7 +51,11 @@ namespace SessionProject.Pages
             var makeOrderWindow = new MakeOrderWindow();
             makeOrderWindow.ShowDialog();
 
-            App.DB.Orders.Load();
+            Orders = App.DB.Orders.Local;
+        }
+
+        private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
             Orders = App.DB.Orders.Local;
         }
     }

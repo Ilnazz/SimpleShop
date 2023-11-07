@@ -28,7 +28,7 @@ namespace SessionProject.Windows
 
             TBCurrentUserFullName.Text = App.CurrentUser.FullName;
 
-            switch (App.CurrentUser.ID)
+            switch (App.CurrentUser.RoleID)
             {
                 case 1: // admin
                     break;
@@ -41,7 +41,6 @@ namespace SessionProject.Windows
                 case 4: // customer - not realized
                     break;
             }
-
         }
 
         private void ButtonLogOut_Click(object sender, RoutedEventArgs e)
